@@ -20,7 +20,6 @@ public class Data extends SugarRecord {
         this.date = date;
     }
 
-
     public int getTaskid() {
         return Taskid;
     }

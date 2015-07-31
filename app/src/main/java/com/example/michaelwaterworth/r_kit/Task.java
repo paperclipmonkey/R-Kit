@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 import com.orm.SugarRecord;
 
-import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * Created by michaelwaterworth on 30/07/15.
  */
 public class Task extends SugarRecord implements Parcelable {
-    int taskid;
-    Date date;
+    Long taskid;
+    Calendar date;
     String className;
     String extras;
     Boolean isService;
@@ -41,19 +41,19 @@ public class Task extends SugarRecord implements Parcelable {
         this.extras = extras;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
-    public int getTaskid() {
+    public long getTaskid() {
         return taskid;
     }
 
-    public void setTaskid(int taskid) {
+    public void setTaskid(long taskid) {
         this.taskid = taskid;
     }
 
@@ -63,7 +63,22 @@ public class Task extends SugarRecord implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        //TODO
+    public void writeToParcel(Parcel out, int i) {
+        out.writeLong(taskid);
+        out.writeLong(date.getTimeInMillis());
+        out.writeString(className);
+        out.writeString(extras);
+       //TODO out.writeByte(isService);
+    }
+
+    private Task(Parcel in) {
+        taskid = in.readLong();
+
+        date = Calendar.getInstance();
+        date.setTimeInMillis(in.readLong());
+
+        className = in.readString();
+        extras = in.readString();
+        //TODO isService = in.readValue();
     }
 }

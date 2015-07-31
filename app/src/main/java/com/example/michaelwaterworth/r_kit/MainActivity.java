@@ -1,6 +1,8 @@
 package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,9 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Calendar;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    public static String ISFIRSTRUN = "IsFirstRun";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -32,9 +38,52 @@ public class MainActivity extends ActionBarActivity
         SchedulerService.startScheduler(getApplicationContext());
     }
 
+    /** Called when the user touches the button */
+    public void startIntro(View view) {
+        Intent intent = new Intent(this, IntroActivity.class);
+        startActivity(intent);
+    }
+
+
+
+    public boolean hasSigned(){
+        // Restore preferences
+        SharedPreferences settings = getPreferences(0);
+        boolean isFirst = settings.getBoolean(ISFIRSTRUN, false);
+        return isFirst;
+    }
+
+    public void setSignedTrue(){
+        SharedPreferences settings = getPreferences(0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("silentMode", true);
+
+        // Commit the edit
+        editor.apply();
+    }
+
+    public List<Task> getUpcomingTasks(){
+        Calendar cal = Calendar.getInstance();
+        long sTime = cal.getTimeInMillis() / 1000;
+
+        return Task.find(Task.class, "datetime > ?", "" + sTime);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null && savedInstanceState.containsKey("signed")){
+            setSignedTrue();
+        }
+
+        if(!hasSigned()){
+            //Show intro screens
+
+        }
+
+
+
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)

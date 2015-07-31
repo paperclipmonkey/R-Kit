@@ -68,7 +68,7 @@ public class Task extends SugarRecord implements Parcelable {
         out.writeLong(date.getTimeInMillis());
         out.writeString(className);
         out.writeString(extras);
-       //TODO out.writeByte(isService);
+        out.writeInt(isService? 0: 1);
     }
 
     private Task(Parcel in) {
@@ -79,6 +79,6 @@ public class Task extends SugarRecord implements Parcelable {
 
         className = in.readString();
         extras = in.readString();
-        //TODO isService = in.readValue();
+        isService = in.readInt() == 1;
     }
 }

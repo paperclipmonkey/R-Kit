@@ -44,9 +44,12 @@ public class SchedulerService extends BroadcastReceiver {
         }
     }
 
-
     private void createService(Context context, Task task) {
         //TODO Start service
+        Intent resultIntent = new Intent();
+        resultIntent.setClassName(context, task.getClassName());
+        resultIntent.putExtra("task", task);
+        context.startService(resultIntent);
     }
 
     public void createNotification(Context context, Task task){

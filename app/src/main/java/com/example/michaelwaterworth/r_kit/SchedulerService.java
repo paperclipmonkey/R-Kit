@@ -19,7 +19,7 @@ import java.util.List;
  * Created by michaelwaterworth on 30/07/15.
  */
 public class SchedulerService extends BroadcastReceiver {
-    public final String TAG = "Scheduler";
+    private final String TAG = "Scheduler";
 
     public SchedulerService() {
     }
@@ -52,7 +52,7 @@ public class SchedulerService extends BroadcastReceiver {
         context.startService(resultIntent);
     }
 
-    public void createNotification(Context context, Task task){
+    private void createNotification(Context context, Task task){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_drawer)
@@ -113,7 +113,7 @@ public class SchedulerService extends BroadcastReceiver {
         killOnBoot(context);
     }
 
-    public static void startOnBoot(Context context){
+    private static void startOnBoot(Context context){
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -122,7 +122,7 @@ public class SchedulerService extends BroadcastReceiver {
                 PackageManager.DONT_KILL_APP);
     }
 
-    public static void killOnBoot(Context context){
+    private static void killOnBoot(Context context){
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
 

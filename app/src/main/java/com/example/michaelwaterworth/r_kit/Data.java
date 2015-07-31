@@ -8,9 +8,9 @@ import java.sql.Date;
  * Created by michaelwaterworth on 30/07/15.
  */
 public class Data extends SugarRecord {
-    int Taskid;
-    String data;
-    Date date;
+    private int Taskid;
+    private String data;
+    private Date date;
 
     public Date getDate() {
         return date;

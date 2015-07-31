@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.michaelwaterworth.r_kit">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -11,7 +13,6 @@
         android:name=".BaseApplication"
         android:theme="@style/AppTheme" >
 
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
         <!-- Start the service on boot -->
         <receiver android:name=".BootReceiver"

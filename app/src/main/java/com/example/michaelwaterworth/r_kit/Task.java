@@ -11,11 +11,11 @@ import java.util.Calendar;
  * Created by michaelwaterworth on 30/07/15.
  */
 public class Task extends SugarRecord implements Parcelable {
-    Long taskid;
-    Calendar date;
-    String className;
-    String extras;
-    Boolean isService;
+    private Long taskid;
+    private Calendar date;
+    private String className;
+    private String extras;
+    private Boolean isService;
 
     public Boolean getIsService() {
         return isService;

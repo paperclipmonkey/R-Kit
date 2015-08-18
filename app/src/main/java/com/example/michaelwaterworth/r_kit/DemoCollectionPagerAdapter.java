@@ -17,17 +17,26 @@ public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new DemoObjectFragment();
-        Bundle args = new Bundle();
-        // Our object is just an integer :-P
-        args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1);
-        fragment.setArguments(args);
+        Fragment fragment = null;
+        if(i == 2){
+            fragment = new SignatureFragment();
+            Bundle args = new Bundle();
+            // Our object is just an integer :-P
+            args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1);
+            fragment.setArguments(args);
+        } else {
+            fragment = new DemoObjectFragment();
+            Bundle args = new Bundle();
+            // Our object is just an integer :-P
+            args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return 100;
+        return 3;
     }
 
     @Override

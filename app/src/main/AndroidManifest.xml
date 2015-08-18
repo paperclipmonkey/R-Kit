@@ -50,6 +50,11 @@
             android:name=".Diary"
             android:label="@string/app_name" >
         </activity>
+
+        <activity
+            android:name=".Tapping"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

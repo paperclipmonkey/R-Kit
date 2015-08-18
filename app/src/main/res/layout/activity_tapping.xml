@@ -25,7 +25,7 @@
             android:text="Button 1"
             android:id="@+id/button_tapping_1"
             android:layout_gravity="right"
-            android:onClick="save" />
+            android:onClick="tapped" />
 
         <Button
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:text="Button 2"
             android:id="@+id/button_tapping_2"
             android:layout_gravity="right"
-            android:onClick="save"
+            android:onClick="tapped"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
@@ -48,6 +48,25 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="57dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/tapping_countdown"
+            android:layout_alignTop="@+id/tapping_counter"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:id="@+id/tapping_start_stop"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="buttonStartStop"
+            android:longClickable="true" />
     </RelativeLayout>
 
 </LinearLayout>

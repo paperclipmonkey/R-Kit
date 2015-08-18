@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity
         t1.setDate(now);
         t1.setNotifTitle("Diary entry");
         t1.setNotifDesc("Please add a new diary entry");
-        t1.setClassName("Diary");
+        t1.setClassName("Tapping");
         t1.setIsService(false);
         t1.save();
     }

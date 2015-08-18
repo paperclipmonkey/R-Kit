@@ -3,8 +3,9 @@ package com.example.michaelwaterworth.r_kit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +35,8 @@ public class Tapping extends Activity{
 
     /** Called when the user touches the button */
     public void save(View view) {
-        EditText editText = (EditText) findViewById(R.id.diary_text);
         Data data = new Data();//Create new Data record
-        data.setData(editText.getText().toString()); //Add text
+        data.setData("" + counter); //Add text
         data.setTaskId(task.getId());
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
@@ -52,18 +52,38 @@ public class Tapping extends Activity{
         lastTapTarget = view.getId();
     }
 
+    public void buttonStartStop(View v){
+        if(counter > 0){
+            save(v);
+        } else {
+            v.setVisibility(View.INVISIBLE);
+            startTapping();
+        }
+    }
+
     public void startTapping(){
         isRunning = true;
         //Set up countdown timer.
+        final TextView mTextView = (TextView) findViewById(R.id.tapping_countdown);
+        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+                mTextView.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                isRunning = false;
+                mTextView.setText("Finished!");
+                Button button = (Button) findViewById(R.id.tapping_start_stop);
+                button.setVisibility(View.VISIBLE);
+                button.setText("Save");
+            }
+        }.start();
     }
 
     public void updateCounter(int iCount){
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
-    }
-
-    public void finishTapping(){
-        isRunning = false;
-        //Clear countdown timer.
     }
 }

@@ -44,6 +44,28 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
+    public void addSchedule(){
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MINUTE, 1);
+        Task t1  = new Task();
+        t1.setDate(now);
+        t1.setNotifTitle("Diary entry");
+        t1.setNotifDesc("Please add a new diary entry");
+        t1.setClassName("Diary");
+        t1.setIsService(false);
+        t1.save();
+    }
+
+    public void showUpcomingTasks(){
+        Calendar cal = Calendar.getInstance();
+
+        long sTime = cal.getTimeInMillis() / 1000;
+
+        cal.add(Calendar.MINUTE, 5);
+        long eTime = cal.getTimeInMillis() / 1000;
+        List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
+    }
+
 
 
     public boolean hasSigned(){
@@ -80,6 +102,8 @@ public class MainActivity extends ActionBarActivity
             //Show intro screens
 
         }
+
+        addSchedule();
 
 
 

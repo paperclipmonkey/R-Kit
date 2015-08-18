@@ -11,11 +11,24 @@ import java.util.Calendar;
  * Created by michaelwaterworth on 30/07/15.
  */
 public class Task extends SugarRecord implements Parcelable {
-    private Long taskid;
-    private Calendar date;
+    private Long date;
     private String className;
+    private String notifTitle;
+    private String notifDesc;
     private String extras;
     private Boolean isService;
+
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     public Boolean getIsService() {
         return isService;
@@ -33,6 +46,22 @@ public class Task extends SugarRecord implements Parcelable {
         this.className = className;
     }
 
+    public String getNotifDesc() {
+        return notifDesc;
+    }
+
+    public void setNotifDesc(String notifDesc) {
+        this.notifDesc = notifDesc;
+    }
+
+    public String getNotifTitle() {
+        return notifTitle;
+    }
+
+    public void setNotifTitle(String notifTitle) {
+        this.notifTitle = notifTitle;
+    }
+
     public String getExtras() {
         return extras;
     }
@@ -42,19 +71,14 @@ public class Task extends SugarRecord implements Parcelable {
     }
 
     public Calendar getDate() {
-        return date;
+        Calendar rDate = Calendar.getInstance();
+        rDate.setTimeInMillis(date * 1000);
+
+        return rDate;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
-    public long getTaskid() {
-        return taskid;
-    }
-
-    public void setTaskid(long taskid) {
-        this.taskid = taskid;
+    public void setDate(Calendar rDate) {
+        this.date = rDate.getTimeInMillis() / 1000;
     }
 
     @Override
@@ -64,19 +88,18 @@ public class Task extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int i) {
-        out.writeLong(taskid);
-        out.writeLong(date.getTimeInMillis());
+        out.writeLong(date);
         out.writeString(className);
         out.writeString(extras);
         out.writeInt(isService? 0: 1);
     }
 
-    private Task(Parcel in) {
-        taskid = in.readLong();
+    public Task(){
 
-        date = Calendar.getInstance();
-        date.setTimeInMillis(in.readLong());
+    }
 
+    public Task(Parcel in) {
+        date = in.readLong();
         className = in.readString();
         extras = in.readString();
         isService = in.readInt() == 1;

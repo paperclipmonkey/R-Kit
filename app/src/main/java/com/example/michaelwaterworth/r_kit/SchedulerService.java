@@ -26,7 +26,7 @@ public class SchedulerService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Service");
+        //Log.d(TAG, "Service");
         //Check in Db - see if there are any upcoming Task
         Calendar cal = Calendar.getInstance();
 
@@ -34,7 +34,8 @@ public class SchedulerService extends BroadcastReceiver {
 
         cal.add(Calendar.MINUTE, 5);
         long eTime = cal.getTimeInMillis() / 1000;
-        List<Task> tasks = Task.find(Task.class, "datetime > ? and datetime < ?", "" + sTime, "" + eTime);
+        List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
+        Log.d(TAG, tasks.toString());
         for(Task task: tasks){
             if(task.getIsService()){
                 createService(context, task);
@@ -56,13 +57,13 @@ public class SchedulerService extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_drawer)
-                        .setContentTitle("Upload Successful")
-                        .setContentText("Click to see uploaded view");
+                        .setContentTitle(task.getNotifTitle())
+                        .setContentText(task.getNotifDesc());
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent();
 
-        resultIntent.setClassName(context, task.getClassName());
+        resultIntent.setClassName(context, context.getPackageName() + "." + task.getClassName());
 
         resultIntent.putExtra("task", task);
 

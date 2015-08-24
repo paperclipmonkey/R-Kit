@@ -55,6 +55,11 @@
             android:name=".Tapping"
             android:label="@string/app_name" >
         </activity>
+
+        <activity
+            android:name=".SpatialMemory"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

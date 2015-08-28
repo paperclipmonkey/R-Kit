@@ -78,11 +78,14 @@
             android:layout_marginTop="57dp"
             android:gravity="center" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/tapping_1_hand"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="200dp">
+            <TextView
+                android:text="@string/intro_t_c"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
 
 
         <Button

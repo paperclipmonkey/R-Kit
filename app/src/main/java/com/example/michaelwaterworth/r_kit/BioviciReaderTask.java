@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import java.util.Set;
 
@@ -21,6 +22,8 @@ import java.util.Set;
  * Created by michaelwaterworth on 25/08/15.
  */
 public class BioviciReaderTask extends Activity{
+    ViewFlipper flipper;
+
     private static final int REQUEST_ENABLE_BT = 1;
     private Button onBtn;
     private Button offBtn;
@@ -35,7 +38,9 @@ public class BioviciReaderTask extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.biovici_reader);
+        setContentView(R.layout.activity_biovici_reader);
+        flipper = (ViewFlipper) findViewById(R.id.intro_switcher);
+
 
         // take an instance of BluetoothAdapter - Bluetooth radio
         myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -97,6 +102,14 @@ public class BioviciReaderTask extends Activity{
             myListView.setAdapter(BTArrayAdapter);
         }
     }
+
+    public void buttonNext(View view) {
+        flipper.showNext();  // Switches to the next view
+//        if(flipper.getCurrentView().getId() == R.id.activity_memory){
+//            //Start game
+//        }
+    }
+
 
     public void on(View view){
         if (!myBluetoothAdapter.isEnabled()) {

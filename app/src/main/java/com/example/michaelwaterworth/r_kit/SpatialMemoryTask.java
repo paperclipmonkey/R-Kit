@@ -2,7 +2,6 @@ package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,7 @@ import java.util.ArrayList;
  * Created by michaelwaterworth on 18/08/15.
  */
 public class SpatialMemoryTask extends Activity{
+    ViewFlipper flipper;
     Task task;
     ArrayList<Button> targetList = new ArrayList<Button>();
     int currentTarget = 0;
@@ -34,6 +35,8 @@ public class SpatialMemoryTask extends Activity{
 
         Intent intent = getIntent();
         task = intent.getParcelableExtra("task");
+
+        flipper = (ViewFlipper) findViewById(R.id.intro_switcher);
     }
 
     @Override
@@ -58,6 +61,20 @@ public class SpatialMemoryTask extends Activity{
                 score++;
                 Log.d("score", "" + score);
                 updateCounter(score);
+                final Button b = (Button) view;
+                b.setBackgroundResource(R.drawable.memory_flower_blue);
+                new CountDownTimer(2000, 1000) {
+
+                    @Override
+                    public void onTick(long l) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        b.setBackgroundResource(R.drawable.memory_flower_default);
+                    }
+                }.start();
+
                 if (currentTarget == targetList.size() - 1) {
                     Log.d("game", "New sequence");
                     //Finished
@@ -78,7 +95,7 @@ public class SpatialMemoryTask extends Activity{
         Log.d("game", "Wrong sequence");
         //Set background red for 1 second.
         final Button b = (Button) view;
-        b.setBackgroundColor(Color.RED);
+        b.setBackgroundResource(R.drawable.memory_flower_red);
         new CountDownTimer(2000, 1000) {
 
             @Override
@@ -87,10 +104,20 @@ public class SpatialMemoryTask extends Activity{
 
             @Override
             public void onFinish() {
-                b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
+                b.setBackgroundResource(R.drawable.memory_flower_default);
             }
         }.start();
     }
+
+    public void buttonNext(View view) {
+
+        flipper.showNext();  // Switches to the next view
+        if(flipper.getCurrentView().getId() == R.id.activity_memory){
+            //Start game
+            startPlaying();
+        }
+    }
+
 
     public void newSequence(){
         //Come up with a new sequence based on the length var
@@ -132,12 +159,12 @@ public class SpatialMemoryTask extends Activity{
                     Button b;
                     if(currentTarget != 0){
                         b = targetList.get(currentTarget - 1);
-                        b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
+                        b.setBackgroundResource(R.drawable.memory_flower_default);
                         //Change currently selected item
                     }
 
                     b = targetList.get(currentTarget);
-                    b.setBackgroundColor(getResources().getColor(R.color.accent_material_dark));
+                    b.setBackgroundResource(R.drawable.memory_flower_lit);
 
                     currentTarget++;
                 } else {
@@ -148,25 +175,19 @@ public class SpatialMemoryTask extends Activity{
 
             public void onFinish() {
                 Button b = targetList.get(currentTarget - 1);
-                b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
+                b.setBackgroundResource(R.drawable.memory_flower_default);
                 isPlayable = true;
                 currentTarget = 0;
-
                 Log.d("MemSeq", "Play on" + levelLength);
-
             }
         }.start();
     }
 
-    public void buttonStartStop(View v){
-        if(!isRunning){
-            save(v);
-        } else {
-            v.setVisibility(View.INVISIBLE);
-            newSequence();
-            startTapping();
-        }
+    public void startPlaying() {
+        newSequence();
+        startTapping();
     }
+
 
     public void startTapping(){
         isRunning = true;

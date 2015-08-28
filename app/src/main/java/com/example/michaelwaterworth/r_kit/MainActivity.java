@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
-    public void addSchedule(){
+    public void addSchedule(String taskName){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
         Task t1  = new Task();
@@ -53,9 +53,9 @@ public class MainActivity extends ActionBarActivity
 //        t1.setNotifDesc("Biovici Reader task");
 //        t1.setClassName("BioviciReaderTask");
         t1.setDate(now);
-        t1.setNotifTitle("Tapping task");
-        t1.setNotifDesc("Tapping task");
-        t1.setClassName("TappingTask");
+        t1.setNotifTitle(taskName);
+        t1.setNotifDesc(taskName);
+        t1.setClassName(taskName);
 
         t1.setIsService(false);
         t1.save();
@@ -108,10 +108,6 @@ public class MainActivity extends ActionBarActivity
 
         }
 
-        addSchedule();
-
-
-
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -122,6 +118,18 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    public void addTappingTask(View v){
+        addSchedule("TappingTask");
+    }
+
+    public void addBioviciReaderTask(View v){
+        addSchedule("BioviciReaderTask");
+    }
+
+    public void addSpatialMemoryTask(View v){
+        addSchedule("SpatialMemoryTask");
     }
 
     @Override

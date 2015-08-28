@@ -13,17 +13,13 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- Bluetooth Strings -->
-    <string name="Text">Status: -</string>
-    <string name="on">Turn On</string>
-    <string name="off">Turn Off</string>
-    <string name="List">List paired Devices</string>
-    <string name="Find">Search new Devices / Cancel</string>
-
-
     <!-- Reusable strings -->
     <string name="done_button">Done</string>
     <string name="next_button">Next</string>
+    <string name="get_started_button">Get Started</string>
+
+
+
 
 
     <!-- Intro task -->
@@ -43,6 +39,16 @@
     <string name="task_completed_subtitle">Thanks for completing the task. Your results will be uploaded.</string>
 
 
+    <!-- Biovici task -->
+    <string name="task_biovici_title">Biovici reader</string>
+    <string name="task_biovici_page1_subtitle">Welcome to R-Kit</string>
+    <string name="task_biovici_status">Status: -</string>
+    <string name="task_biovici_on">Turn On</string>
+    <string name="task_biovici_off">Turn Off</string>
+    <string name="task_biovici_list">List paired Devices</string>
+    <string name="task_biovici_search">Search new Devices / Cancel</string>
+
+
     <!-- Tapping Task -->
     <string name="task_tapping_page3_title">Tap the buttons as quickly as you can using two fingers.</string>
     <string name="task_tapping_button">Tap</string>
@@ -54,10 +60,6 @@
 
 
     <!-- Spatial Memory Task -->
-    <string name="task_spatial_next_button">Next</string>
-    <string name="task_spatial_get_started_button">Get Started</string>
-    <string name="task_spatial_done_button">Done</string>
-
     <string name="task_spatial_title">Spatial Memory</string>
     <string name="task_spatial_page1_subtitle">This activity measures your short-term spatial memory by asking you to repeat the order in which flowers light up.</string>
     <string name="task_spatial_page2_subtitle">Some of the flowers will light up one at a time. Tap those flowers in the same order they lit up. To begin tap Get Started then watch closely.</string>

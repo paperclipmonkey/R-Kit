@@ -7,7 +7,32 @@
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Tapping"
+            android:id="@+id/button4"
+            android:layout_gravity="left|top"
+            android:onClick="addTappingTask" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Memory"
+            android:id="@+id/button5"
+            android:layout_gravity="center_horizontal|top"
+            android:onClick="addSpatialMemoryTask" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Biovici"
+            android:id="@+id/button6"
+            android:layout_gravity="right|top"
+            android:onClick="addBioviciReaderTask" />
+    </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right

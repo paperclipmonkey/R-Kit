@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by michaelwaterworth on 18/08/15.
  */
-public class SpatialMemory extends Activity{
+public class SpatialMemoryTask extends Activity{
     Task task;
     ArrayList<Button> targetList = new ArrayList<Button>();
     int currentTarget = 0;

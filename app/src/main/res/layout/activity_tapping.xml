@@ -1,72 +1,197 @@
 <!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/activity_tapping"
-    tools:context=".TappingActivity">
+    android:id="@+id/tapping_switcher"
+    tools:context=".TappingActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tapping"
-        android:id="@+id/textView2" />
-
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button 1"
-            android:id="@+id/button_tapping_1"
-            android:layout_gravity="right"
-            android:onClick="tapped" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button 2"
-            android:id="@+id/button_tapping_2"
-            android:layout_gravity="right"
-            android:onClick="tapped"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+        android:layout_height="match_parent"
+        android:id="@+id/page_1"
+        android:layout_margin="10dp"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="0"
-            android:id="@+id/tapping_counter"
+            android:text="@string/task_tapping_title"
+            android:id="@+id/tapping_tappage_page1_title"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal" />
+
+
+        <ImageView
+            android:layout_width="192dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/tapping_buttons"
+            android:layout_weight="0.20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_tapping_page1_subtitle"
+            android:id="@+id/tapping_tappage_page1_subtitle"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_button"
+            android:id="@+id/tapping_page1_next"
+            android:onClick="buttonNext"
+            android:longClickable="true"
+            android:layout_gravity="bottom|right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/page_2"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="@string/task_tapping_title"
+            android:id="@+id/tapping_tappage_page2_title"
+            android:layout_gravity="center_horizontal" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_tapping_page2_subtitle"
+            android:id="@+id/tapping_tappage_page2_subtitle"
+            android:layout_marginTop="57dp"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/tapping_1_hand"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_button"
+            android:id="@+id/tapping_page2_next"
+            android:onClick="buttonNext"
+            android:longClickable="true"
+            android:layout_gravity="bottom|right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_tapping"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_tapping_page3_title"
+            android:id="@+id/tapping_tappage_instructions"
+            android:layout_gravity="center_horizontal"
             android:layout_below="@+id/button_tapping_1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_marginTop="57dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="0"
-            android:id="@+id/tapping_countdown"
-            android:layout_alignTop="@+id/tapping_counter"
-            android:layout_centerHorizontal="true" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_horizontal"
+            android:text="Total Taps"
+            android:id="@+id/tapping_counter_title"
+            android:layout_marginTop="57dp" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"
-            android:id="@+id/tapping_start_stop"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="buttonStartStop"
-            android:longClickable="true" />
-    </RelativeLayout>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_horizontal"
+            android:text="0"
+            android:id="@+id/tapping_counter"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="57dp" />
 
-</LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="@string/task_tapping_button"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/button_tapping_1"
+                android:layout_gravity="right"
+                android:background = "@drawable/rounded_button"
+                android:onClick="tapped" />
+
+            <Button
+                android:text="@string/task_tapping_button"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/button_tapping_2"
+                android:layout_gravity="right"
+                android:background = "@drawable/rounded_button"
+                android:onClick="tapped"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/page_4"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/task_completed_title"
+                android:layout_marginTop="57dp"
+                android:layout_gravity="center_horizontal" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/task_completed_subtitle"
+                android:layout_marginTop="57dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/done_button"
+                android:onClick="buttonDone"
+                android:longClickable="true"
+                android:layout_gravity="bottom|right" />
+        </LinearLayout>
+    </LinearLayout>
+</ViewFlipper>

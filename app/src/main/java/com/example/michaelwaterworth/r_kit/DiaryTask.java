@@ -10,7 +10,7 @@ import android.widget.Toast;
 /**
  * Created by michaelwaterworth on 15/08/15.
  */
-public class Diary extends Activity {
+public class DiaryTask extends Activity {
     Task task;
 
     @Override

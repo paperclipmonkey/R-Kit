@@ -12,12 +12,12 @@ import android.util.Log;
 /**
  * Created by michaelwaterworth on 15/08/15.
  */
-public class StepCounter extends IntentService {
-    String TAG = "StepCounter";
+public class StepCounterTask extends IntentService {
+    String TAG = "StepCounterTask";
     SensorManager mSensorManager;
     Sensor mStepSensor;
 
-    public StepCounter(Context context){
+    public StepCounterTask(Context context){
         super("");
 
         //hasSystemFeature()

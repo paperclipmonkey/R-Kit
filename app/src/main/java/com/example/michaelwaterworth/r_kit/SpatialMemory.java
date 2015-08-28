@@ -2,6 +2,7 @@ package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -52,70 +53,93 @@ public class SpatialMemory extends Activity{
 
     public void tapped(View view){
         if(!isRunning) return;
-        if(view.equals(targetList.get(currentTarget))){//User tapped next item in list
-            score++;
-            Log.d("game", ""+score);
-            if(currentTarget == targetList.size() - 1){
-                //Finished
-                levelLength++;//Increase the level
-                newSequence();
+        try {
+            if (view.equals(targetList.get(currentTarget))) {//User tapped next item in list
+                score++;
+                Log.d("score", "" + score);
+                updateCounter(score);
+                if (currentTarget == targetList.size() - 1) {
+                    Log.d("game", "New sequence");
+                    //Finished
+                    levelLength++;//Increase the level
+                    newSequence();
+                } else {
+                    currentTarget++;
+                }
             } else {
-                currentTarget++;
+                wrongSequence(view);
             }
-        } else {
-            //Set background red for 1 second.
-            final Button b = (Button) view;
-            b.setBackgroundColor(getResources().getColor(R.color.material_deep_teal_500));
-            new CountDownTimer(2000, 1000) {
-
-                @Override
-                public void onTick(long l) {
-                }
-
-                @Override
-                public void onFinish() {
-                    b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
-                }
-            }.start();
+        } catch(Exception e){
+            wrongSequence(view);
         }
+    }
+
+    public void wrongSequence(View view) {
+        Log.d("game", "Wrong sequence");
+        //Set background red for 1 second.
+        final Button b = (Button) view;
+        b.setBackgroundColor(Color.RED);
+        new CountDownTimer(2000, 1000) {
+
+            @Override
+            public void onTick(long l) {
+            }
+
+            @Override
+            public void onFinish() {
+                b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
+            }
+        }.start();
     }
 
     public void newSequence(){
         //Come up with a new sequence based on the length var
         //Play the current sequence to the user
         //Enable play again
+        currentTarget = 0;
 
         targetList = new ArrayList<Button>();//Clear old list
 
-        int i = 0;
-        while(i < levelLength){
-            int x = (int) Math.ceil(Math.random()*3);
-            int y = (int) Math.ceil(Math.random()*3);
-            int id  = getResources().getIdentifier("button_memory_" + x + "_" + y ,"id", getApplicationContext().getPackageName());
-
-            Log.d("MemSeq", "Tile no." + x + " " + y);
-
-            targetList.add((Button) findViewById(id));
+            int i = 1;
+        while(i < 4){
+            int x = 1;
+            while(x < 4){
+                int id  = getResources().getIdentifier("button_memory_" + i + "_" + x ,"id", getApplicationContext().getPackageName());
+                targetList.add((Button) findViewById(id));
+                x++;
+            }
             i++;
         }
+//        int i = 0;
+//        while(i < levelLength){
+//            int x = (int) Math.ceil(Math.random()*3);
+//            int y = (int) Math.ceil(Math.random()*3);
+//            int id  = getResources().getIdentifier("button_memory_" + x + "_" + y ,"id", getApplicationContext().getPackageName());
+//
+//            Log.d("MemSeq", "Tile no." + x + " " + y);
+//
+//            targetList.add((Button) findViewById(id));
+//            i++;
+//        }
 
-        Log.d("MemSeq", "Leve no." + levelLength);
+        Log.d("MemSeq", "Level no." + levelLength);
 
         CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //Set previous item as default
-                if(currentTarget < targetList.size() - 1) {
+                if(currentTarget < targetList.size()) {
                     Button b;
+                    if(currentTarget != 0){
+                        b = targetList.get(currentTarget - 1);
+                        b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
+                        //Change currently selected item
+                    }
+
                     b = targetList.get(currentTarget);
                     b.setBackgroundColor(getResources().getColor(R.color.accent_material_dark));
-                    //Change currently selected item
+
                     currentTarget++;
-
-                    //Change currently selected item to item in list.
-
-                    b = targetList.get(currentTarget);
-                    b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
                 } else {
                     this.onFinish();
                     this.cancel();
@@ -123,10 +147,11 @@ public class SpatialMemory extends Activity{
             }
 
             public void onFinish() {
-
-                Button b = targetList.get(currentTarget);
+                Button b = targetList.get(currentTarget - 1);
                 b.setBackgroundColor(getResources().getColor(R.color.accent_material_light));
                 isPlayable = true;
+                currentTarget = 0;
+
                 Log.d("MemSeq", "Play on" + levelLength);
 
             }

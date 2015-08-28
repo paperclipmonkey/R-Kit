@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/intro_switcher"
+    tools:context=".IntroActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/page_1"
+        android:layout_margin="10dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/intro_page1_title"
+            android:id="@+id/page1_title"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal" />
+
+
+        <ImageView
+            android:layout_width="427dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/rkit_launcher"
+            android:layout_weight="0.63" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/intro_page1_subtitle"
+            android:id="@+id/page1_subtitle"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_button"
+            android:id="@+id/tapping_page1_next"
+            android:onClick="buttonNext"
+            android:longClickable="true"
+            android:layout_gravity="bottom|right" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/page_2"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="@string/intro_page2_title"
+            android:id="@+id/tapping_tappage_page2_title"
+            android:layout_gravity="center_horizontal" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/intro_page2_subtitle"
+            android:id="@+id/tapping_tappage_page2_subtitle"
+            android:layout_marginTop="57dp"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/tapping_1_hand"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_button"
+            android:id="@+id/tapping_page2_next"
+            android:onClick="buttonNext"
+            android:longClickable="true"
+            android:layout_gravity="bottom|right" />
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.github.gcacace.signaturepad.views.SignaturePad
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/signature_pad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:penColor="@android:color/black"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_spatial_done_button"
+            android:id="@+id/button3"
+            android:onClick="buttonDone"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</ViewFlipper>

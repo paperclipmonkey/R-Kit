@@ -56,7 +56,7 @@ public class SchedulerService extends BroadcastReceiver {
     private void createNotification(Context context, Task task){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_drawer)
+                        .setSmallIcon(R.drawable.rkit_silhouette)
                         .setContentTitle(task.getNotifTitle())
                         .setContentText(task.getNotifDesc());
 

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.michaelwaterworth.r_kit">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
@@ -47,17 +49,22 @@
         </activity>
 
         <activity
-            android:name=".Diary"
+            android:name=".DiaryTask"
             android:label="@string/app_name" >
         </activity>
 
         <activity
-            android:name=".Tapping"
+            android:name=".TappingTask"
             android:label="@string/app_name" >
         </activity>
 
         <activity
             android:name=".SpatialMemory"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name=".BioviciReaderTask"
             android:label="@string/app_name" >
         </activity>
     </application>

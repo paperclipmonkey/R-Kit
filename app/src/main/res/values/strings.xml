@@ -12,4 +12,58 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- Bluetooth Strings -->
+    <string name="Text">Status: -</string>
+    <string name="on">Turn On</string>
+    <string name="off">Turn Off</string>
+    <string name="List">List paired Devices</string>
+    <string name="Find">Search new Devices / Cancel</string>
+
+
+    <!-- Reusable strings -->
+    <string name="done_button">Done</string>
+    <string name="next_button">Next</string>
+
+
+    <!-- Intro task -->
+    <string name="intro_page1_title">Welcome to R-Kit</string>
+    <string name="intro_page1_subtitle">R-Kit description</string>
+    <string name="intro_page2_title">Terms &amp; Conditions</string>
+    <string name="intro_page2_subtitle">Please agree to the terms and conditions</string>
+    <string name="intro_page2_button">I Agree</string>
+    <string name="intro_page3_title">Signature</string>
+    <string name="intro_page3_subtitle">I consent to the agree by the R-Kit terms and conditions</string>
+    <string name="empty_signature">Please sign</string>
+
+
+    <!-- Task default text -->
+    <string name="task_completed_title">Task Complete</string>
+    <string name="task_completed_subtitle">Thanks for completing the task. Your results will be uploaded.</string>
+
+
+    <!-- Tapping Task -->
+    <string name="task_tapping_page3_title">Tap the buttons as quickly as you can using two fingers.</string>
+    <string name="task_tapping_button">Tap</string>
+    <string name="task_tapping_title">Tapping Speed</string>
+    <string name="task_tapping_page1_subtitle">This activity measures your tapping speed.</string>
+    <string name="task_tapping_page2_subtitle">Rest your phone on a flat surface. Two buttons will appear on your screen for 20 seconds. Using two fingers on the same hand, take turns tapping the buttons as quickly as you can. \n Tap get started to begin.</string>
+    <string name="task_tapping_page2_next_button">Get Started</string>
+    <string name="task_tapping_page3_counter_label">Total taps</string>
+
+
+    <!-- Spatial Memory Task -->
+    <string name="task_spatial_next_button">Next</string>
+    <string name="task_spatial_get_started_button">Get Started</string>
+    <string name="task_spatial_done_button">Done</string>
+
+    <string name="task_spatial_title">Spatial Memory</string>
+    <string name="task_spatial_page1_subtitle">This activity measures your short-term spatial memory by asking you to repeat the order in which flowers light up.</string>
+    <string name="task_spatial_page2_subtitle">Some of the flowers will light up one at a time. Tap those flowers in the same order they lit up. To begin tap Get Started then watch closely.</string>
+    <string name="task_spatial_page3_title">Watch the flowers light up</string>
+    <string name="task_spatial_page3_flowers_label">Flowers</string>
+    <string name="task_spatial_page3_score_label">Score</string>
+    <string name="task_spatial_page4_title">Tap the flowers in the order they lit up</string>
+    <string name="task_spatial_page5_title">Try Again</string>
+    <string name="task_spatial_page5_subtitle">You didn\'t quite make it through that time. Tap Next to continue.</string>
 </resources>

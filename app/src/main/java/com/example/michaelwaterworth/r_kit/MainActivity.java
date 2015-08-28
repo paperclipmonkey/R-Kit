@@ -48,10 +48,15 @@ public class MainActivity extends ActionBarActivity
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
         Task t1  = new Task();
+//        t1.setDate(now);
+//        t1.setNotifTitle("Biovici Reader");
+//        t1.setNotifDesc("Biovici Reader task");
+//        t1.setClassName("BioviciReaderTask");
         t1.setDate(now);
-        t1.setNotifTitle("Diary entry");
-        t1.setNotifDesc("Please add a new diary entry");
-        t1.setClassName("Tapping");
+        t1.setNotifTitle("Tapping task");
+        t1.setNotifDesc("Tapping task");
+        t1.setClassName("TappingTask");
+
         t1.setIsService(false);
         t1.save();
     }

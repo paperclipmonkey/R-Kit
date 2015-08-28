@@ -103,4 +103,21 @@ public class TappingTask extends Activity{
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
     }
+
+
+    // Tapping task tap - Used to store taps
+    public class TappingTaskTap {
+        Long timeStamp; //Millis
+        int buttonNo; //ID of button - unique to the two buttons
+        public TappingTaskTap(Long pTimeStamp, int pButtonNo){
+            timeStamp = pTimeStamp;
+            buttonNo = pButtonNo;
+        }
+
+        @Override
+        public String toString() {
+            return "timeStamp:" + timeStamp + "\n" +
+                    "buttonNo:" + buttonNo;
+        }
+    }
 }

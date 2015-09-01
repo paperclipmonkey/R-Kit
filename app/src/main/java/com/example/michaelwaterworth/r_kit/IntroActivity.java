@@ -18,14 +18,15 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by michaelwaterworth on 31/07/15.
+ * Created by michaelwaterworth on 31/07/15. Copyright Michael Waterworth
+
  */
 public class IntroActivity extends FragmentActivity {
     // When requested, this adapter returns a DemoObjectFragment,
     // representing an object in the collection.
-    ViewFlipper flipper;
-    SignaturePad mSignaturePad;
-    final String TAG = "IntroActivity";
+    private ViewFlipper flipper;
+    private SignaturePad mSignaturePad;
+    private final String TAG = "IntroActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,19 +14,20 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 
 /**
- * Created by michaelwaterworth on 18/08/15.
+ * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
+
  */
 public class SpatialMemoryTask extends Activity{
-    ViewFlipper flipper;
-    Task task;
-    ArrayList<Button> targetList = new ArrayList<Button>();
-    int currentTarget = 0;
-    int levelLength = 3;
+    private ViewFlipper flipper;
+    private Task task;
+    private ArrayList<Button> targetList = new ArrayList<>();
+    private int currentTarget = 0;
+    private int levelLength = 3;
 
-    int score = 0;
+    private int score = 0;
 
-    boolean isRunning = true;
-    boolean isPlayable = false;
+    private boolean isRunning = true;
+    private boolean isPlayable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class SpatialMemoryTask extends Activity{
         }
     }
 
-    public void wrongSequence(View view) {
+    private void wrongSequence(View view) {
         Log.d("game", "Wrong sequence");
         //Set background red for 1 second.
         final Button b = (Button) view;
@@ -119,13 +120,13 @@ public class SpatialMemoryTask extends Activity{
     }
 
 
-    public void newSequence(){
+    private void newSequence(){
         //Come up with a new sequence based on the length var
         //Play the current sequence to the user
         //Enable play again
         currentTarget = 0;
 
-        targetList = new ArrayList<Button>();//Clear old list
+        targetList = new ArrayList<>();//Clear old list
 
             int i = 1;
         while(i < 4){
@@ -183,13 +184,13 @@ public class SpatialMemoryTask extends Activity{
         }.start();
     }
 
-    public void startPlaying() {
+    private void startPlaying() {
         newSequence();
         startTapping();
     }
 
 
-    public void startTapping(){
+    private void startTapping(){
         isRunning = true;
         //Set up countdown timer.
         final TextView mTextView = (TextView) findViewById(R.id.tapping_countdown);
@@ -209,8 +210,11 @@ public class SpatialMemoryTask extends Activity{
         }.start();
     }
 
-    public void updateCounter(int iCount){
+    private void updateCounter(int iCount){
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
+    }
+
+    public void buttonStartStop(View view) {
     }
 }

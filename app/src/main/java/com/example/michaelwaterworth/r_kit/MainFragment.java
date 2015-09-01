@@ -16,10 +16,11 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 /**
- * Created by michaelwaterworth on 16/08/15.
+ * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
+
  */
 public class MainFragment extends Fragment{
-    ListView listView;
+    private ListView listView;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -75,14 +76,13 @@ public class MainFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // ListView Clicked item index
-                int itemPosition = i;
 
                 // ListView Clicked item value
                 String itemValue = (String) listView.getItemAtPosition(i);
 
                 // Show Alert
                 Toast.makeText(getActivity(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                        "Position :" + i + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();
             }
         });

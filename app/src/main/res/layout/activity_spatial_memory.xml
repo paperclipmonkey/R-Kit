@@ -252,7 +252,6 @@
                 android:id="@+id/tapping_start_stop"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:onClick="buttonStartStop"
                 android:longClickable="true" />
         </RelativeLayout>
 

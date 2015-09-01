@@ -6,9 +6,10 @@ import java.util.Date;
 import java.util.Calendar;
 
 /**
- * Created by michaelwaterworth on 30/07/15.
+ * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
+
  */
-public class Data extends SugarRecord {
+class Data extends SugarRecord {
     private Long taskId;
     private String data;
     private Date date;

@@ -10,12 +10,13 @@ import android.hardware.SensorManager;
 import android.util.Log;
 
 /**
- * Created by michaelwaterworth on 15/08/15.
+ * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
+
  */
 public class StepCounterTask extends IntentService {
-    String TAG = "StepCounterTask";
-    SensorManager mSensorManager;
-    Sensor mStepSensor;
+    private final String TAG = "StepCounterTask";
+    private final SensorManager mSensorManager;
+    private final Sensor mStepSensor;
 
     public StepCounterTask(Context context){
         super("");
@@ -23,27 +24,26 @@ public class StepCounterTask extends IntentService {
         //hasSystemFeature()
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mStepSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        SensorEventListener mSensorEventListener = new SensorEventListener() {
+            private float mStepOffset;
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if (mStepOffset == 0) {
+                    mStepOffset = event.values[0];
+                }
+                Log.d(TAG, "" + event.values[0]);
+                //mTextView.setText(Float.toString(event.values[0] - mStepOffset));
+            }
+        };
         mSensorManager.registerListener(mSensorEventListener, mStepSensor,
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
-
-    private SensorEventListener mSensorEventListener = new SensorEventListener() {
-        private float mStepOffset;
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            if (mStepOffset == 0) {
-                mStepOffset = event.values[0];
-            }
-            Log.d(TAG, "" + event.values[0]);
-            //mTextView.setText(Float.toString(event.values[0] - mStepOffset));
-        }
-    };
 
 
     @Override

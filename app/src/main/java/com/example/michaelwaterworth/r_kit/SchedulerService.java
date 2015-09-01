@@ -16,10 +16,10 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by michaelwaterworth on 30/07/15.
+ * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
+
  */
 public class SchedulerService extends BroadcastReceiver {
-    private final String TAG = "Scheduler";
 
     public SchedulerService() {
     }
@@ -35,6 +35,7 @@ public class SchedulerService extends BroadcastReceiver {
         cal.add(Calendar.MINUTE, 5);
         long eTime = cal.getTimeInMillis() / 1000;
         List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
+        String TAG = "Scheduler";
         Log.d(TAG, tasks.toString());
         for(Task task: tasks){
             if(task.getIsService()){
@@ -57,7 +58,7 @@ public class SchedulerService extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.rkit_silhouette)
-                        .setContentTitle(task.getNotifTitle())
+                        .setContentTitle(task.getNotificationTitle())
                         .setContentText(task.getNotifDesc());
 
         // Creates an explicit intent for an Activity in your app

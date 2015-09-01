@@ -11,10 +11,11 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by michaelwaterworth on 16/08/15.
+ * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
+
  */
-public class TaskAdapter extends BaseAdapter {
-    private List<Task> mTasks;
+class TaskAdapter extends BaseAdapter {
+    private final List<Task> mTasks;
 
     public TaskAdapter(List<Task> tasks) {
         mTasks = tasks;
@@ -56,7 +57,7 @@ public class TaskAdapter extends BaseAdapter {
 //                icon.setImageResource(R.drawable.item_unselected);
 //            }
 
-        title.setText(ti.getNotifTitle());
+        title.setText(ti.getNotificationTitle());
         artist.setText("by " + ti.getNotifDesc());
 
         return V;

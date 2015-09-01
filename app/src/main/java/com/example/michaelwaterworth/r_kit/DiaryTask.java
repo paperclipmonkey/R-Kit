@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by michaelwaterworth on 15/08/15.
+ * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
+
  */
 public class DiaryTask extends Activity {
-    Task task;
+    private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

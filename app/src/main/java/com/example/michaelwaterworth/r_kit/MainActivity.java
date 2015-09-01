@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public static String ISFIRSTRUN = "IsFirstRun";
+    private static final String ISFIRSTRUN = "IsFirstRun";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -44,20 +44,20 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
-    public void addSchedule(String taskName){
+    private void addSchedule(String taskName){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
         Task t1  = new Task();
 //        t1.setDate(now);
-//        t1.setNotifTitle("Biovici Reader");
+//        t1.setNotificationTitle("Biovici Reader");
 //        t1.setNotifDesc("Biovici Reader task");
 //        t1.setClassName("BioviciReaderTask");
         t1.setDate(now);
-        t1.setNotifTitle(taskName);
+        t1.setNotificationTitle(taskName);
         t1.setNotifDesc(taskName);
         t1.setClassName(taskName);
 
-        t1.setIsService(false);
+        t1.setIsService();
         t1.save();
     }
 
@@ -69,17 +69,18 @@ public class MainActivity extends ActionBarActivity
         cal.add(Calendar.MINUTE, 5);
         long eTime = cal.getTimeInMillis() / 1000;
         List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
+        //TODO
     }
 
 
 
-    public boolean hasSigned(){
+    private boolean hasSigned(){
         // Restore preferences
         SharedPreferences settings = getPreferences(0);
         return settings.getBoolean(ISFIRSTRUN, false);
     }
 
-    public void setSignedTrue(){
+    private void setSignedTrue(){
         SharedPreferences settings = getPreferences(0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("silentMode", true);
@@ -105,7 +106,7 @@ public class MainActivity extends ActionBarActivity
 
         if(!hasSigned()){
             //Show intro screens
-
+            //TODO
         }
 
         setContentView(R.layout.activity_main);
@@ -155,7 +156,7 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void restoreActionBar() {
+    private void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);

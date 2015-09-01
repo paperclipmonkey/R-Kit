@@ -8,12 +8,13 @@ import com.orm.SugarRecord;
 import java.util.Calendar;
 
 /**
- * Created by michaelwaterworth on 30/07/15.
+ * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
+
  */
 public class Task extends SugarRecord implements Parcelable {
     private Long date;
     private String className;
-    private String notifTitle;
+    private String notificationTitle;
     private String notifDesc;
     private String extras;
     private Boolean isService;
@@ -34,8 +35,8 @@ public class Task extends SugarRecord implements Parcelable {
         return isService;
     }
 
-    public void setIsService(Boolean isService) {
-        this.isService = isService;
+    public void setIsService() {
+        this.isService = false;
     }
 
     public String getClassName() {
@@ -54,12 +55,12 @@ public class Task extends SugarRecord implements Parcelable {
         this.notifDesc = notifDesc;
     }
 
-    public String getNotifTitle() {
-        return notifTitle;
+    public String getNotificationTitle() {
+        return notificationTitle;
     }
 
-    public void setNotifTitle(String notifTitle) {
-        this.notifTitle = notifTitle;
+    public void setNotificationTitle(String notificationTitle) {
+        this.notificationTitle = notificationTitle;
     }
 
     public String getExtras() {

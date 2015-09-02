@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_title"
+            android:text="@string/task_biovici_turnon_title"
             android:id="@+id/page2_title"
             android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal" />
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_page1_subtitle"
+            android:text="@string/task_biovici_turnon_subtitle"
             android:id="@+id/page2_subtitle"
             android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal"
@@ -81,14 +81,15 @@
             android:layout_width="427dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/biovici"
+            android:src="@drawable/bluetooth"
+            android:alpha="0.5"
             android:layout_weight="0.63" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:onClick="buttonNext"
+            android:text="@string/turnon_button"
+            android:onClick="buttonTurnOnBluetooth"
             android:longClickable="true"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
@@ -206,6 +207,7 @@
             android:layout_weight="0.63"
             android:alpha="0.5"
             android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 
 
@@ -241,7 +243,9 @@
             android:layout_gravity="center_horizontal|bottom"
             android:src="@drawable/biovici_reader_read"
             android:alpha="0.5"
-            android:layout_weight="0.63" />
+            android:layout_weight="0.63"
+            android:layout_alignParentBottom="true"/>
+
     </LinearLayout>
 
     <!-- Thanks screen -->

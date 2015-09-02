@@ -29,41 +29,22 @@ import java.util.UUID;
 
 /**
  * Created by michaelwaterworth on 25/08/15. Copyright Michael Waterworth
-
  */
-public class BioviciReaderTask extends Activity{
+public class BioviciReaderTask extends Activity {
     private static final String TAG = "Biovici Reader";
-
-    private ViewFlipper flipper;
-
-    private Button onBtn;
-    private Button offBtn;
-    private Button listBtn;
-    private Button findBtn;
-    private TextView text;
-    private BluetoothAdapter myBluetoothAdapter;
-    private Set<BluetoothDevice> pairedDevices;
-    private ListView myListView;
-    private ArrayAdapter<String> BTArrayAdapter;
-
-    private String deviceAddress;
-
     // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_ENABLE_BT = 3;
-
+    // Well known SPP UUID
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private ViewFlipper flipper;
+    private String deviceAddress;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private InputStream inStream = null;
-
     private Thread workerThread;
     private byte[] readBuffer;
     private int readBufferPosition;
     private volatile boolean stopWorker;
-
-    // Well known SPP UUID
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
     private boolean isCalibrating;
     private boolean hasCalibrated;
     private boolean isReading;
@@ -72,65 +53,106 @@ public class BioviciReaderTask extends Activity{
     /*
     Bluetooth discover
      */
-    private static final boolean D = true;
-    // Return Intent extra
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+
     // Member fields
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    // The BroadcastReceiver that listens for discovered devices and
+    // changes the title when discovery is finished
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // If it's already paired, skip it, because it's been listed already
+                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                }
+                // When discovery is finished, change the Activity title
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                setProgressBarIndeterminateVisibility(false);
+                setTitle(R.string.select_device);
+                if (mNewDevicesArrayAdapter.getCount() == 0) {
+                    String noDevices = getResources().getText(R.string.none_found).toString();
+                    mNewDevicesArrayAdapter.add(noDevices);
+                }
+            }
+        }
+    };
+    // The on-click listener for all devices in the ListViews
+    private final AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+            // Cancel discovery because it's costly and we're about to connect
+            mBtAdapter.cancelDiscovery();
 
+            // Get the device MAC address, which is the last 17 chars in the View
+            String info = ((TextView) v).getText().toString();
+            deviceAddress = info.substring(info.length() - 17);
+            connectDevice();
+            pageNext();
+        }
+    };
+
+    /* Called when the second activity's finished */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT:
+                if (resultCode == RESULT_OK) {
+                    pageNext();
+                }
+                break;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biovici_reader);
         flipper = (ViewFlipper) findViewById(R.id.intro_switcher);
-
-
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        //Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
     }
 
     public void buttonNext(View view) {
         pageNext();
     }
 
-    private void pageNext(){
+    private void pageNext() {
         flipper.showNext();  // Switches to the next view
-        if(flipper.getCurrentView().getId() == R.id.turn_on_bluetooth){
+        if (flipper.getCurrentView().getId() == R.id.turn_on_bluetooth) {
             //Check if bluetooth is turned on, else display help.
             checkBTState();
             return;
             //TODO - Show image / display text in text view.
         }
-        if(flipper.getCurrentView().getId() == R.id.pair_bluetooth) {
+        if (flipper.getCurrentView().getId() == R.id.pair_bluetooth) {
             bluetoothPair();
             return;
         }
-        if(flipper.getCurrentView().getId() == R.id.calibrate_device) {
+        if (flipper.getCurrentView().getId() == R.id.calibrate_device) {
         }
-        if(flipper.getCurrentView().getId() == R.id.read_device) {
+        if (flipper.getCurrentView().getId() == R.id.read_device) {
             //Show spinner
         }
     }
 
-    private void checkBTState() {
-        //TODO - Clear up
-        // Check for Bluetooth support and then check to make sure it is turned on
+    public void buttonTurnOnBluetooth(View view) {
+        //Prompt user to turn on Bluetooth
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+    }
 
+    private void checkBTState() {
         // Emulator doesn't support Bluetooth and will return null
-        if(btAdapter == null) {
+        if (btAdapter == null) {
             Log.e(TAG, "btAdapter null");
         } else {
             if (btAdapter.isEnabled()) {
                 Log.d(TAG, "...Bluetooth is enabled...");
                 pageNext();
-            } else {
-                //Prompt user to turn on Bluetooth
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
     }
@@ -138,57 +160,42 @@ public class BioviciReaderTask extends Activity{
     private void connectDevice() {
         // Get the device MAC address
         connectToDevice(deviceAddress);
-        // Get the BluetoothDevice object
-        //BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
     }
 
-    private void beginListenForData()
-    {
+    private void beginListenForData() {
         final Handler handler = new Handler();
         final byte delimiter = 10; //This is the ASCII code for a newline character
 
         stopWorker = false;
         readBufferPosition = 0;
         readBuffer = new byte[1024];
-        workerThread = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                while(!Thread.currentThread().isInterrupted() && !stopWorker)
-                {
-                    try
-                    {
+        workerThread = new Thread(new Runnable() {
+            public void run() {
+                while (!Thread.currentThread().isInterrupted() && !stopWorker) {
+                    try {
                         int bytesAvailable = inStream.available();
-                        if(bytesAvailable > 0)
-                        {
+                        if (bytesAvailable > 0) {
                             byte[] packetBytes = new byte[bytesAvailable];
                             inStream.read(packetBytes);
-                            for(int i=0;i<bytesAvailable;i++)
-                            {
+                            for (int i = 0; i < bytesAvailable; i++) {
                                 byte b = packetBytes[i];
-                                if(b == delimiter)
-                                {
+                                if (b == delimiter) {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
 
-                                    handler.post(new Runnable()
-                                    {
-                                        public void run()
-                                        {
+                                    handler.post(new Runnable() {
+                                        public void run() {
                                             respondToEvent(data);
                                         }
                                     });
-                                }
-                                else
-                                {
+                                } else {
                                     readBuffer[readBufferPosition++] = b;
                                 }
                             }
                         }
-                    }
-                    catch (IOException ex) {
+                    } catch (IOException ex) {
                         stopWorker = true;
                     }
                 }
@@ -198,10 +205,10 @@ public class BioviciReaderTask extends Activity{
         workerThread.start();
     }
 
-    private void respondToEvent(String string){
+    private void respondToEvent(String string) {
         Log.d(TAG, "Received message: " + string);
         string = string.replace("\n", "").replace("\r", "");
-        switch(string){
+        switch (string) {
             case "Calibration started":
                 eventCalibrationStarted();
                 break;
@@ -212,25 +219,25 @@ public class BioviciReaderTask extends Activity{
                 eventReadingStarted();
                 break;
         }
-        if(string.contains("Reading:")){
+        if (string.contains("Reading:")) {
             try {
                 int reading = Integer.parseInt(string.substring(9));
                 eventReadingFinished(reading);
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
         }
     }
 
-    private void eventCalibrationStarted(){
-        if(flipper.getCurrentView().getId() == R.id.calibrate_device && !isCalibrating) {
+    private void eventCalibrationStarted() {
+        if (flipper.getCurrentView().getId() == R.id.calibrate_device && !isCalibrating) {
             Toast.makeText(getApplicationContext(), "Calibrating", Toast.LENGTH_SHORT).show();
             isCalibrating = true;
         }
     }
 
-    private void eventCalibrationFinished(){
-        if(flipper.getCurrentView().getId() == R.id.calibrate_device && !hasCalibrated) {
+    private void eventCalibrationFinished() {
+        if (flipper.getCurrentView().getId() == R.id.calibrate_device && !hasCalibrated) {
             hasCalibrated = true;
             //TODO - Show message that it's been calibrated
             Toast.makeText(getApplicationContext(), "Calibrated!", Toast.LENGTH_SHORT).show();
@@ -245,8 +252,8 @@ public class BioviciReaderTask extends Activity{
         }
     }
 
-    private void eventReadingStarted(){
-        if(flipper.getCurrentView().getId() == R.id.read_device && !isReading) {
+    private void eventReadingStarted() {
+        if (flipper.getCurrentView().getId() == R.id.read_device && !isReading) {
             ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
             calibrateDeviceSpinner.setVisibility(View.VISIBLE);
             isReading = true;
@@ -254,8 +261,15 @@ public class BioviciReaderTask extends Activity{
         }
     }
 
-    private void eventReadingFinished(int reading){
-        if(flipper.getCurrentView().getId() == R.id.read_device && !hasRead) {
+
+    /*
+    - - - - - - - - - - - - - - - - - - - -
+    Discover Bluetooth code
+    - - - - - - - - - - - - - - - - - - - -
+    */
+
+    private void eventReadingFinished(int reading) {
+        if (flipper.getCurrentView().getId() == R.id.read_device && !hasRead) {
             hasRead = true;
             ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
             calibrateDeviceSpinner.setVisibility(View.INVISIBLE);
@@ -264,6 +278,7 @@ public class BioviciReaderTask extends Activity{
             new CountDownTimer(2000, 2000) {
                 public void onTick(long millisUntilFinished) {
                 }
+
                 public void onFinish() {
                     pageNext();
                 }
@@ -311,14 +326,7 @@ public class BioviciReaderTask extends Activity{
         }
     }
 
-
-    /*
-    - - - - - - - - - - - - - - - - - - - -
-    Discover Bluetooth code
-    - - - - - - - - - - - - - - - - - - - -
-    */
-
-    private void bluetoothPair(){
+    private void bluetoothPair() {
         // Setup the window
 
         // Initialize the button to perform device discovery
@@ -375,7 +383,6 @@ public class BioviciReaderTask extends Activity{
      * Start device discover with the BluetoothAdapter
      */
     private void doDiscovery() {
-        if (D) Log.d(TAG, "doDiscovery()");
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
@@ -392,47 +399,6 @@ public class BioviciReaderTask extends Activity{
         // Request discover from BluetoothAdapter
         mBtAdapter.startDiscovery();
     }
-
-    // The on-click listener for all devices in the ListViews
-    private final AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
-            // Cancel discovery because it's costly and we're about to connect
-            mBtAdapter.cancelDiscovery();
-
-            // Get the device MAC address, which is the last 17 chars in the View
-            String info = ((TextView) v).getText().toString();
-            deviceAddress = info.substring(info.length() - 17);
-            connectDevice();
-            pageNext();
-        }
-    };
-
-    // The BroadcastReceiver that listens for discovered devices and
-    // changes the title when discovery is finished
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            // When discovery finds a device
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                }
-                // When discovery is finished, change the Activity title
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                setProgressBarIndeterminateVisibility(false);
-                setTitle(R.string.select_device);
-                if (mNewDevicesArrayAdapter.getCount() == 0) {
-                    String noDevices = getResources().getText(R.string.none_found).toString();
-                    mNewDevicesArrayAdapter.add(noDevices);
-                }
-            }
-        }
-    };
 
     public void buttonDone(View view) {
         this.finish();

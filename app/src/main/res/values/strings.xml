@@ -44,8 +44,14 @@
 
 
     <!-- Biovici task -->
-    <string name="task_biovici_title">Biovici reader</string>
-    <string name="task_biovici_page1_subtitle">Use the Biovici reader to measure your hormone levels</string>
+        <string name="task_biovici_title">Biovici reader</string>
+        <string name="task_biovici_page1_subtitle">Use the Biovici reader to measure your hormone levels</string>
+
+        <!-- Turn on screen -->
+        <string name="task_biovici_turnon_title">Turn on bluetooth</string>
+        <string name="task_biovici_turnon_subtitle">Please turn on bluetooth to use the Biovici reader</string>
+        <string name="turnon_button">Turn on bluetooth</string>
+
 
         <!-- Pair screen -->
         <string name="task_biovici_pair_title">Connect to Biovici reader</string>

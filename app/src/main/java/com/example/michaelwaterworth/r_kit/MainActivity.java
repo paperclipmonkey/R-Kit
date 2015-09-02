@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
 
     /** Called when the user touches the button */
-    public void startService() {
+    private void startService() {
         SchedulerService.startScheduler(getApplicationContext());
     }
 

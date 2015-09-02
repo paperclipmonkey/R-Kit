@@ -1,8 +1,10 @@
 package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -45,7 +46,8 @@ public class MainFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //View base = inflater.inflate(R.layout.fragment_main, container, false);
+        Log.d("Home", "Inflating MainFragment");
+        View base = inflater.inflate(R.layout.fragment_main, container, false);
 
 
         // Create a progress bar to display while the list loads
@@ -54,12 +56,12 @@ public class MainFragment extends Fragment{
                 LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         progressBar.setIndeterminate(true);
 
-        listView = (ListView) getActivity().findViewById(R.id.taskslist);
+        listView = (ListView) base.findViewById(R.id.taskslist);
         listView.setEmptyView(progressBar);
 
         // Must add the progress bar to the root of the layout
-        ViewGroup root = (ViewGroup) getActivity().findViewById(android.R.id.content);
-        root.addView(progressBar);
+        //ViewGroup root = (ViewGroup) getActivity().findViewById(android.R.id.content);
+        //root.addView(progressBar);
 
 
         //Check in Db - see if there are any upcoming Task
@@ -67,7 +69,7 @@ public class MainFragment extends Fragment{
 
         long sTime = cal.getTimeInMillis() / 1000;
         TaskAdapter adapter = new TaskAdapter(Task.find(Task.class, "date > ?", "" + sTime));
-
+        Log.d("Home", "Upcoming tasks: " + adapter.getCount());
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
@@ -78,16 +80,26 @@ public class MainFragment extends Fragment{
                 // ListView Clicked item index
 
                 // ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(i);
-
-                // Show Alert
-                Toast.makeText(getActivity(),
-                        "Position :" + i + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+                Task task = (Task) listView.getItemAtPosition(i);
+//                String itemValue = task.getNotificationTitle();
+                //check if within 5 minutes
+                Calendar futureDate = Calendar.getInstance();
+                futureDate.add(Calendar.MINUTE, 5);
+                if(task.getDate().compareTo(futureDate) < 0){
+                    //Allow clicking and initiate activity
+                    Intent resultIntent = new Intent();
+                    resultIntent.setClassName(getActivity(), getActivity().getPackageName() + "." + task.getClassName());
+                    resultIntent.putExtra("task", task);
+                    getActivity().startActivity(resultIntent);
+                }
+//                // Show Alert
+//                Toast.makeText(getActivity(),
+//                        "Position :" + i + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+//                        .show();
             }
         });
 
-        return root;
+        return base;
     }
 
     @Override

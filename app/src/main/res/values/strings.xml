@@ -8,6 +8,11 @@
     <string name="title_section1">Upcoming tasks</string>
     <string name="title_section2">About</string>
 
+
+    <string name="upcoming_today">Today</string>
+    <string name="upcoming_week">This week</string>
+    <string name="upcoming_month">This month</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -19,9 +24,6 @@
     <string name="done_button">Done</string>
     <string name="next_button">Next</string>
     <string name="get_started_button">Get Started</string>
-
-
-
 
 
     <!-- Intro task -->
@@ -63,8 +65,8 @@
 
         <!-- Reading screen -->
         <string name="task_biovici_reading_title">Take reading</string>
-    <string name="task_biovici_read_subtitle">Place strip on tongue for 5 seconds then insert in to reader</string>
-    <string name="task_biovici_read_progress">Analysing</string>
+        <string name="task_biovici_read_subtitle">Place strip on tongue for 5 seconds then insert in to reader</string>
+        <string name="task_biovici_read_progress">Analysing</string>
 
 
     <!-- Tapping Task -->

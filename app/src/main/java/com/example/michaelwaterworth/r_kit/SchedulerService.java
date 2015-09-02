@@ -63,11 +63,8 @@ public class SchedulerService extends BroadcastReceiver {
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent();
-
         resultIntent.setClassName(context, context.getPackageName() + "." + task.getClassName());
-
         resultIntent.putExtra("task", task);
-
         mBuilder.setAutoCancel(true);//Automatically dismiss on click
 
         // The stack builder object will contain an artificial back stack for the
@@ -93,7 +90,7 @@ public class SchedulerService extends BroadcastReceiver {
         //TODO - Fix issue of replacing previous notification
 
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(0, mBuilder.build());
+        mNotificationManager.notify(Integer.parseInt(task.getId()+""), mBuilder.build());
     }
 
     public static void startScheduler(Context context){

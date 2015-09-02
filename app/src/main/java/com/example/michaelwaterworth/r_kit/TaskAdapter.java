@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
@@ -37,18 +39,18 @@ class TaskAdapter extends BaseAdapter {
         //return mTasks.get(i).getId();
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View V = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
 
-        if(V == null) {
+        if(view == null) {
             LayoutInflater vi = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            V = vi.inflate(R.layout.task_row, null);
+            view = vi.inflate(R.layout.task_row, null);
         }
 
         Task ti = mTasks.get(position);
-        ImageView icon = (ImageView)V.findViewById(R.id.task_image);
-        TextView title = (TextView)V.findViewById(R.id.task_title);
-        TextView artist = (TextView)V.findViewById(R.id.task_description);
+        ImageView icon = (ImageView)view.findViewById(R.id.task_image);
+        TextView title = (TextView)view.findViewById(R.id.task_title);
+        TextView description = (TextView)view.findViewById(R.id.task_description);
+        TextView dateView = (TextView)view.findViewById(R.id.task_date);
 
 //            if(ti.isSelected()) {
 //                icon.setImageResource(R.drawable.item_selected);
@@ -57,9 +59,14 @@ class TaskAdapter extends BaseAdapter {
 //                icon.setImageResource(R.drawable.item_unselected);
 //            }
 
+        //icon.setImageResource(R.drawable.rkit_launcher);
         title.setText(ti.getNotificationTitle());
-        artist.setText("by " + ti.getNotifDesc());
+        description.setText(ti.getNotifDesc());
 
-        return V;
+        //SimpleDateFormat format = new SimpleDateFormat("MMM dd,yyyy hh:mm a", Locale.UK);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.UK);
+        String date = format.format(ti.getDate().getTime());
+        dateView.setText(date);
+        return view;
     }
 }

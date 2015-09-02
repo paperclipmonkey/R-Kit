@@ -57,13 +57,13 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    private void addSchedule(String taskName){
+    private void addSchedule(String taskName, String title, String description){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
         Task t1  = new Task();
         t1.setDate(now);
-        t1.setNotificationTitle(taskName);
-        t1.setNotifDesc(taskName);
+        t1.setNotificationTitle(title);
+        t1.setNotifDesc(description);
         t1.setClassName(taskName);
         t1.setIsService();
         t1.save();
@@ -133,25 +133,19 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void addTappingTask(View v){
-        addSchedule("TappingTask");
-    }
-
-    public void addBioviciReaderTask(View v){
-        addSchedule("BioviciReaderTask");
-    }
-
-    public void addSpatialMemoryTask(View v){
-        addSchedule("SpatialMemoryTask");
-    }
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        if(position == 0){
+            fragmentManager.beginTransaction()
+                .replace(R.id.container, MainFragment.newInstance(position + 1))
+                .commit();
+        } else {
+            fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -195,6 +189,19 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            return true;
+        }
+        if (id == R.id.action_biovici) {
+            addSchedule("BioviciReaderTask", "Cortisol check", "Time to measure your cortisol level");
+            return true;
+        }
+        if (id == R.id.action_tapping) {
+            addSchedule("TappingTask", "Tapping Speed", "New R-Kit task available");
+            return true;
+        }
+        if (id == R.id.action_spatial) {
+            addSchedule("SpatialMemoryTask", "Spatial Memory", "Click to test your spatial memory");
             return true;
         }
 

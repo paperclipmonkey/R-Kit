@@ -15,6 +15,10 @@
         android:name=".BaseApplication"
         android:theme="@style/AppTheme" >
 
+        <!-- Sugar ORM -->
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example.michaelwaterworth.r_kit" />
 
         <!-- Start the service on boot -->
         <receiver android:name=".BootReceiver"
@@ -27,10 +31,7 @@
         <receiver android:name=".SchedulerService">
         </receiver>
 
-        <!-- Sugar ORM -->
-        <meta-data android:name="VERSION" android:value="1" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example.michaelwaterworth.r_kit" />
+        <service android:name=".StepCounterTask"/>
 
         <activity
             android:name=".MainActivity"
@@ -41,7 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <activity
             android:name=".IntroActivity"

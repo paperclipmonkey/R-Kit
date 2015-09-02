@@ -15,12 +15,20 @@ import android.util.Log;
  */
 public class StepCounterTask extends IntentService {
     private final String TAG = "StepCounterTask";
-    private final SensorManager mSensorManager;
-    private final Sensor mStepSensor;
+    private SensorManager mSensorManager;
+    private Sensor mStepSensor;
+
+    public StepCounterTask(){
+        super("");
+        initialise(getApplicationContext());
+    }
 
     public StepCounterTask(Context context){
         super("");
+        initialise(context);
+    }
 
+    private void initialise(Context context){
         //hasSystemFeature()
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mStepSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);

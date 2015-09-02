@@ -40,22 +40,28 @@
 
     <!-- Biovici task -->
     <string name="task_biovici_title">Biovici reader</string>
-    <string name="task_biovici_page1_subtitle">Welcome to R-Kit</string>
-    <string name="task_biovici_status">Status: -</string>
-    <string name="task_biovici_on">Turn On</string>
-    <string name="task_biovici_off">Turn Off</string>
-    <string name="task_biovici_list">List paired Devices</string>
-    <string name="task_biovici_search">Search new Devices / Cancel</string>
+    <string name="task_biovici_page1_subtitle">Use the Biovici reader to measure your hormone levels</string>
 
-    <!--  DeviceListActivity -->
-    <string name="scanning">Scanning for devices</string>
-    <string name="select_device">Select a device to connect</string>
-    <string name="none_paired">No devices have been paired</string>
-    <string name="none_found">No devices found</string>
-    <string name="title_paired_devices">Paired Devices</string>
-    <string name="title_other_devices">Other Available Devices</string>
-    <string name="button_scan">Scan for devices</string>
+        <!-- Pair screen -->
+        <string name="task_biovici_pair_title">Connect to Biovici reader</string>
+        <string name="task_biovici_pair_subtitle">Please select the biovici reader below, or search for new devices to add</string>
+        <string name="scanning">Scanning for devices</string>
+        <string name="select_device">Select a device to connect</string>
+        <string name="none_paired">No devices have been paired</string>
+        <string name="none_found">No devices found</string>
+        <string name="title_paired_devices">Paired Devices</string>
+        <string name="title_other_devices">Other Available Devices</string>
+        <string name="button_scan">Scan for devices</string>
 
+        <!-- Calibrate screen -->
+        <string name="task_biovici_calibrate_title">Calibrate strip</string>
+        <string name="task_biovici_calibrate_subtitle">Insert test strip to calibrate</string>
+        <string name="task_biovici_calibrate_success">Calibrated</string>
+
+        <!-- Reading screen -->
+        <string name="task_biovici_reading_title">Take reading</string>
+    <string name="task_biovici_read_subtitle">Place strip on tongue for 5 seconds then insert in to reader</string>
+    <string name="task_biovici_read_progress">Analysing</string>
 
 
     <!-- Tapping Task -->
@@ -78,4 +84,5 @@
     <string name="task_spatial_page4_title">Tap the flowers in the order they lit up</string>
     <string name="task_spatial_page5_title">Try Again</string>
     <string name="task_spatial_page5_subtitle">You didn\'t quite make it through that time. Tap Next to continue.</string>
+
 </resources>

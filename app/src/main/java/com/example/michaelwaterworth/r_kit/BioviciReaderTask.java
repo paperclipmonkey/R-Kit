@@ -90,7 +90,7 @@ public class BioviciReaderTask extends Activity{
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+        //Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
     }
 
     public void buttonNext(View view) {
@@ -103,7 +103,7 @@ public class BioviciReaderTask extends Activity{
             //Check if bluetooth is turned on, else display help.
             checkBTState();
             return;
-            //TODO - Show image / display text in textview.
+            //TODO - Show image / display text in text view.
         }
         if(flipper.getCurrentView().getId() == R.id.pair_bluetooth) {
             bluetoothPair();

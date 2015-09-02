@@ -5,6 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <!-- Intro screen -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -42,12 +43,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
+            android:text="@string/get_started_button"
             android:onClick="buttonNext"
             android:longClickable="true"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
+    <!-- Turn on bluetooth screen -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -91,6 +93,7 @@
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
+    <!-- Pair bluetooth screen -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -99,21 +102,42 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
+        <Button android:id="@+id/button_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_scan"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_biovici_pair_title"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_biovici_pair_subtitle"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:id="@+id/textView3" />
+
         <TextView android:id="@+id/title_paired_devices"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="@string/title_paired_devices"
-            android:visibility="gone"
-            android:background="#009688"
-            android:textColor="#fff"
-            android:paddingLeft="5dp"
-            />
+            android:visibility="gone" />
+
         <ListView android:id="@+id/paired_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stackFromBottom="true"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1"/>
+
         <TextView android:id="@+id/title_new_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,23 +145,17 @@
             android:visibility="gone"
             android:background="#009688"
             android:textColor="#fff"
-            android:paddingLeft="5dp"
-            />
+            android:paddingLeft="5dp"/>
+
         <ListView android:id="@+id/new_devices"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stackFromBottom="true"
-            android:layout_weight="2"
-            />
-        <Button android:id="@+id/button_scan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_scan"
-            />
+            android:layout_height="0dp"
+            android:stackFromBottom="false" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <!-- Calibrate device screen -->
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -145,11 +163,19 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:weightSum="1"
+            android:id="@+id/linearLayout">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Calibrate device"
+                android:text="@string/task_biovici_calibrate_title"
                 android:layout_marginTop="57dp"
                 android:layout_gravity="center_horizontal" />
 
@@ -157,17 +183,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/task_biovici_page1_subtitle"
+                android:text="@string/task_biovici_calibrate_subtitle"
                 android:layout_marginTop="57dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center" />
-
-            <ImageView
-                android:layout_width="427dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/biovici"
-                android:layout_weight="0.63" />
 
             <ProgressBar
                 android:id="@+id/calibrate_device_progress"
@@ -177,8 +196,20 @@
                 android:visibility="invisible"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+        </LinearLayout>
 
+        <ImageView
+            android:layout_width="427dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/biovici_reader_calibrate"
+            android:layout_weight="0.63"
+            android:alpha="0.5"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
+    <!-- Read device screen -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -191,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Take reading"
+            android:text="@string/task_biovici_reading_title"
             android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal" />
 
@@ -199,7 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_page1_subtitle"
+            android:text="@string/task_biovici_read_subtitle"
             android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal"
             android:gravity="center" />
@@ -207,16 +238,18 @@
         <ImageView
             android:layout_width="427dp"
             android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/biovici"
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="@drawable/biovici_reader_read"
+            android:alpha="0.5"
             android:layout_weight="0.63" />
     </LinearLayout>
 
+    <!-- Thanks screen -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/page_4"
+        android:id="@+id/thanks"
         android:layout_margin="10dp">
 
         <TextView

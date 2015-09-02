@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.io.IOException;
@@ -61,6 +64,10 @@ public class BioviciReaderTask extends Activity{
     // Well known SPP UUID
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
+    private boolean isCalibrating;
+    private boolean hasCalibrated;
+    private boolean isReading;
+    private boolean hasRead;
 
     /*
     Bluetooth discover
@@ -170,7 +177,7 @@ public class BioviciReaderTask extends Activity{
                                     {
                                         public void run()
                                         {
-                                            Log.d("myBT", data);
+                                            respondToEvent(data);
                                         }
                                     });
                                 }
@@ -189,6 +196,79 @@ public class BioviciReaderTask extends Activity{
         });
 
         workerThread.start();
+    }
+
+    private void respondToEvent(String string){
+        Log.d(TAG, "Received message: " + string);
+        string = string.replace("\n", "").replace("\r", "");
+        switch(string){
+            case "Calibration started":
+                eventCalibrationStarted();
+                break;
+            case "Calibration finished":
+                eventCalibrationFinished();
+                break;
+            case "Reading started":
+                eventReadingStarted();
+                break;
+        }
+        if(string.contains("Reading:")){
+            try {
+                int reading = Integer.parseInt(string.substring(9));
+                eventReadingFinished(reading);
+            } catch (Exception e){
+                Log.e(TAG, e.getMessage());
+            }
+        }
+    }
+
+    private void eventCalibrationStarted(){
+        if(flipper.getCurrentView().getId() == R.id.calibrate_device && !isCalibrating) {
+            Toast.makeText(getApplicationContext(), "Calibrating", Toast.LENGTH_SHORT).show();
+            isCalibrating = true;
+        }
+    }
+
+    private void eventCalibrationFinished(){
+        if(flipper.getCurrentView().getId() == R.id.calibrate_device && !hasCalibrated) {
+            hasCalibrated = true;
+            //TODO - Show message that it's been calibrated
+            Toast.makeText(getApplicationContext(), "Calibrated!", Toast.LENGTH_SHORT).show();
+            new CountDownTimer(2000, 2000) {
+                public void onTick(long millisUntilFinished) {
+                }
+
+                public void onFinish() {
+                    pageNext();
+                }
+            }.start();
+        }
+    }
+
+    private void eventReadingStarted(){
+        if(flipper.getCurrentView().getId() == R.id.read_device && !isReading) {
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            calibrateDeviceSpinner.setVisibility(View.VISIBLE);
+            isReading = true;
+            Toast.makeText(getApplicationContext(), "Reading started", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void eventReadingFinished(int reading){
+        if(flipper.getCurrentView().getId() == R.id.read_device && !hasRead) {
+            hasRead = true;
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            calibrateDeviceSpinner.setVisibility(View.INVISIBLE);
+            //Show message that a reading has been taken
+            Toast.makeText(getApplicationContext(), "Reading taken: " + reading, Toast.LENGTH_SHORT).show();
+            new CountDownTimer(2000, 2000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    pageNext();
+                }
+            }.start();
+        }
     }
 
     private void connectToDevice(String adr) {
@@ -353,4 +433,8 @@ public class BioviciReaderTask extends Activity{
             }
         }
     };
+
+    public void buttonDone(View view) {
+        this.finish();
+    }
 }

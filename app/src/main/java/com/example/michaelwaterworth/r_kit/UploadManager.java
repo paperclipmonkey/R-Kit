@@ -26,58 +26,13 @@ import org.json.JSONObject;
 public class UploadManager extends BroadcastReceiver {
     private final String TAGLISTEN = "Broadcast Receiver";
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-
-        if (intent != null) {
-            if (UploadService.getActionBroadcast().equals(intent.getAction())) {
-                final int status = intent.getIntExtra(UploadService.STATUS, 0);
-                final String uploadId = intent.getStringExtra(UploadService.UPLOAD_ID);
-
-                switch (status) {
-                    case UploadService.STATUS_COMPLETED:
-                        final int responseCode = intent.getIntExtra(UploadService.SERVER_RESPONSE_CODE, 0);
-                        final String responseMsg = intent.getStringExtra(UploadService.SERVER_RESPONSE_MESSAGE);
-                        onCompleted(context, uploadId, responseCode, responseMsg);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-
-    public void onCompleted(Context context,
-                            String uploadId,
-                            int serverResponseCode,
-                            String serverResponseMessage) {
-        Log.i(TAGLISTEN, "Upload with ID " + uploadId
-                + " has been completed with HTTP " + serverResponseCode
-                + ". Response from server: " + serverResponseMessage);
-
-        if(serverResponseCode == 200) {
-            try {
-                JSONObject jsonObject = new JSONObject(serverResponseMessage);
-
-                if(jsonObject != null) {
-                    buildSuccessNotification(context, jsonObject);
-
-                    purgeData();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    static public void purgeData(){
+    static public void purgeData() {
         //Purge the database
         Data.deleteAll(Data.class);
         //TODO - Remove all saved files
     }
 
-    static public void buildSuccessNotification(Context context, JSONObject jsonObject){
+    static public void buildSuccessNotification(Context context, JSONObject jsonObject) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.rkit_launcher)
@@ -174,7 +129,52 @@ public class UploadManager extends BroadcastReceiver {
             //You will end up here only if you pass an incomplete UploadRequest
             Log.e("AndroidUploadService", exc.getLocalizedMessage(), exc);
         }
-       // Toast.makeText(context.getApplicationContext(), context.getString(R.string.uploading_toast), Toast.LENGTH_LONG).show();
+        // Toast.makeText(context.getApplicationContext(), context.getString(R.string.uploading_toast), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        if (intent != null) {
+            if (UploadService.getActionBroadcast().equals(intent.getAction())) {
+                final int status = intent.getIntExtra(UploadService.STATUS, 0);
+                final String uploadId = intent.getStringExtra(UploadService.UPLOAD_ID);
+
+                switch (status) {
+                    case UploadService.STATUS_COMPLETED:
+                        final int responseCode = intent.getIntExtra(UploadService.SERVER_RESPONSE_CODE, 0);
+                        final String responseMsg = intent.getStringExtra(UploadService.SERVER_RESPONSE_MESSAGE);
+                        onCompleted(context, uploadId, responseCode, responseMsg);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    public void onCompleted(Context context,
+                            String uploadId,
+                            int serverResponseCode,
+                            String serverResponseMessage) {
+        Log.i(TAGLISTEN, "Upload with ID " + uploadId
+                + " has been completed with HTTP " + serverResponseCode
+                + ". Response from server: " + serverResponseMessage);
+
+        if (serverResponseCode == 200) {
+            try {
+                JSONObject jsonObject = new JSONObject(serverResponseMessage);
+
+                if (jsonObject != null) {
+                    buildSuccessNotification(context, jsonObject);
+
+                    purgeData();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

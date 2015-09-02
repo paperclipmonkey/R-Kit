@@ -17,11 +17,47 @@ import java.util.List;
 
 /**
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
-
  */
 public class SchedulerService extends BroadcastReceiver {
 
     public SchedulerService() {
+    }
+
+    public static void startScheduler(Context context) {
+        startOnBoot(context);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, SchedulerService.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        Calendar cal = Calendar.getInstance();
+
+        // setRepeating() lets you specify a precise custom interval--in this case,
+        // 20 minutes.
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                1000 * 10, alarmIntent);
+    }
+
+    public static void stopScheduler(Context context) {
+        //TODO Fill in the rest - Stop pending schedules?
+        killOnBoot(context);
+    }
+
+    private static void startOnBoot(Context context) {
+        ComponentName receiver = new ComponentName(context, BootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    private static void killOnBoot(Context context) {
+        ComponentName receiver = new ComponentName(context, BootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
     @Override
@@ -37,8 +73,8 @@ public class SchedulerService extends BroadcastReceiver {
         List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
         String TAG = "Scheduler";
         Log.d(TAG, tasks.toString());
-        for(Task task: tasks){
-            if(task.getIsService()){
+        for (Task task : tasks) {
+            if (task.getIsService()) {
                 createService(context, task);
             } else {
                 createNotification(context, task);
@@ -54,7 +90,7 @@ public class SchedulerService extends BroadcastReceiver {
         context.startService(resultIntent);
     }
 
-    private void createNotification(Context context, Task task){
+    private void createNotification(Context context, Task task) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.rkit_silhouette)
@@ -90,43 +126,6 @@ public class SchedulerService extends BroadcastReceiver {
         //TODO - Fix issue of replacing previous notification
 
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(Integer.parseInt(task.getId()+""), mBuilder.build());
-    }
-
-    public static void startScheduler(Context context){
-        startOnBoot(context);
-        AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, SchedulerService.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-        Calendar cal = Calendar.getInstance();
-
-        // setRepeating() lets you specify a precise custom interval--in this case,
-        // 20 minutes.
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                1000 * 10, alarmIntent);
-    }
-
-    public static void stopScheduler(Context context){
-        //TODO Fill in the rest - Stop pending schedules?
-        killOnBoot(context);
-    }
-
-    private static void startOnBoot(Context context){
-        ComponentName receiver = new ComponentName(context, BootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
-    }
-
-    private static void killOnBoot(Context context){
-        ComponentName receiver = new ComponentName(context, BootReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
+        mNotificationManager.notify(Integer.parseInt(task.getId() + ""), mBuilder.build());
     }
 }

@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 /**
  * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
-
  */
 public class DiaryTask extends Activity {
     private Task task;
@@ -28,7 +27,9 @@ public class DiaryTask extends Activity {
         super.onPause();
     }
 
-    /** Called when the user touches the button */
+    /**
+     * Called when the user touches the button
+     */
     public void save(View view) {
         EditText editText = (EditText) findViewById(R.id.diary_text);
         Data data = new Data();//Create new Data record

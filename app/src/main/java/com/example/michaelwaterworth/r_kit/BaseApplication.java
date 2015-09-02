@@ -4,10 +4,9 @@ import com.alexbbb.uploadservice.UploadService;
 
 /**
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
-
  */
 
-public class BaseApplication extends com.orm.SugarApp{
+public class BaseApplication extends com.orm.SugarApp {
 
     @Override
     public void onCreate() {

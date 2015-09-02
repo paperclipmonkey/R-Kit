@@ -35,12 +35,16 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    /** Called when the user touches the button */
+    /**
+     * Called when the user touches the button
+     */
     private void startService() {
         SchedulerService.startScheduler(getApplicationContext());
     }
 
-    /** Called when the user touches the button */
+    /**
+     * Called when the user touches the button
+     */
     public void startIntro(View view) {
         Intent intent = new Intent(this, IntroActivity.class);
         startActivity(intent);
@@ -57,10 +61,10 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    private void addSchedule(String taskName, String title, String description){
+    private void addSchedule(String taskName, String title, String description) {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
-        Task t1  = new Task();
+        Task t1 = new Task();
         t1.setDate(now);
         t1.setNotificationTitle(title);
         t1.setNotifDesc(description);
@@ -69,7 +73,7 @@ public class MainActivity extends ActionBarActivity
         t1.save();
     }
 
-    public void showUpcomingTasks(){
+    public void showUpcomingTasks() {
         Calendar cal = Calendar.getInstance();
 
         long sTime = cal.getTimeInMillis() / 1000;
@@ -81,14 +85,13 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-
-    private boolean hasSigned(){
+    private boolean hasSigned() {
         // Restore preferences
         SharedPreferences settings = getPreferences(0);
         return settings.getBoolean(ISFIRSTRUN, false);
     }
 
-    private void setSignedTrue(){
+    private void setSignedTrue() {
         SharedPreferences settings = getPreferences(0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("silentMode", true);
@@ -97,7 +100,7 @@ public class MainActivity extends ActionBarActivity
         editor.apply();
     }
 
-    public List<Task> getUpcomingTasks(){
+    public List<Task> getUpcomingTasks() {
         Calendar cal = Calendar.getInstance();
         long sTime = cal.getTimeInMillis() / 1000;
 
@@ -108,11 +111,11 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState != null && savedInstanceState.containsKey("signed")){
+        if (savedInstanceState != null && savedInstanceState.containsKey("signed")) {
             setSignedTrue();
         }
 
-        if(!hasSigned()){
+        if (!hasSigned()) {
             //Show intro screens
             //TODO
         }
@@ -128,7 +131,7 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        if(!isMyServiceRunning(SchedulerService.class)){
+        if (!isMyServiceRunning(SchedulerService.class)) {
             startService();
         }
     }
@@ -137,14 +140,14 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if(position == 0){
+        if (position == 0) {
             fragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance(position + 1))
-                .commit();
+                    .replace(R.id.container, MainFragment.newInstance(position + 1))
+                    .commit();
         } else {
             fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
         }
     }
 
@@ -218,6 +221,9 @@ public class MainActivity extends ActionBarActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -228,9 +234,6 @@ public class MainActivity extends ActionBarActivity
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override

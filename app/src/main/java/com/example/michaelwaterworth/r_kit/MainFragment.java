@@ -18,15 +18,17 @@ import java.util.Calendar;
 
 /**
  * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
-
  */
-public class MainFragment extends Fragment{
-    private ListView listView;
+public class MainFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private ListView listView;
+
+    public MainFragment() {
+    }
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -38,9 +40,6 @@ public class MainFragment extends Fragment{
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public MainFragment() {
     }
 
     @Override
@@ -85,7 +84,7 @@ public class MainFragment extends Fragment{
                 //check if within 5 minutes
                 Calendar futureDate = Calendar.getInstance();
                 futureDate.add(Calendar.MINUTE, 5);
-                if(task.getDate().compareTo(futureDate) < 0){
+                if (task.getDate().compareTo(futureDate) < 0) {
                     //Allow clicking and initiate activity
                     Intent resultIntent = new Intent();
                     resultIntent.setClassName(getActivity(), getActivity().getPackageName() + "." + task.getClassName());

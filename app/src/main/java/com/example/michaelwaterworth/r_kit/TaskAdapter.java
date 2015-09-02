@@ -14,7 +14,6 @@ import java.util.Locale;
 
 /**
  * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
-
  */
 class TaskAdapter extends BaseAdapter {
     private final List<Task> mTasks;
@@ -41,16 +40,16 @@ class TaskAdapter extends BaseAdapter {
 
     public View getView(int position, View view, ViewGroup parent) {
 
-        if(view == null) {
-            LayoutInflater vi = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (view == null) {
+            LayoutInflater vi = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = vi.inflate(R.layout.task_row, null);
         }
 
         Task ti = mTasks.get(position);
-        ImageView icon = (ImageView)view.findViewById(R.id.task_image);
-        TextView title = (TextView)view.findViewById(R.id.task_title);
-        TextView description = (TextView)view.findViewById(R.id.task_description);
-        TextView dateView = (TextView)view.findViewById(R.id.task_date);
+        ImageView icon = (ImageView) view.findViewById(R.id.task_image);
+        TextView title = (TextView) view.findViewById(R.id.task_title);
+        TextView description = (TextView) view.findViewById(R.id.task_description);
+        TextView dateView = (TextView) view.findViewById(R.id.task_date);
 
 //            if(ti.isSelected()) {
 //                icon.setImageResource(R.drawable.item_selected);

@@ -2,22 +2,25 @@ package com.example.michaelwaterworth.r_kit;
 
 import com.orm.SugarRecord;
 
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
-
  */
 class Data extends SugarRecord {
     private Long taskId;
     private String data;
     private Date date;
 
-    public Data(){
+    public Data() {
         Calendar calendar = Calendar.getInstance();
-        date =  calendar.getTime();
+        date = calendar.getTime();
+    }
+
+    static List<Data> serialiseAll() {
+        return Data.listAll(Data.class);
     }
 
     public Date getDate() {
@@ -42,9 +45,5 @@ class Data extends SugarRecord {
 
     public void setData(String data) {
         this.data = data;
-    }
-
-    static List<Data> serialiseAll(){
-        return Data.listAll(Data.class);
     }
 }

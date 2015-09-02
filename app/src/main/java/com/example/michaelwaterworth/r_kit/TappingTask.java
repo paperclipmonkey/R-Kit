@@ -16,15 +16,14 @@ import java.util.List;
 
 /**
  * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
-
  */
-public class TappingTask extends Activity{
+public class TappingTask extends Activity {
+    private final List<TappingTaskTap> taps = new ArrayList<>();
     private Task task;
     private int lastTapTarget;
     private int counter;
     private boolean isRunning = false;
     private boolean isDone = false;
-    private final List<TappingTaskTap> taps = new ArrayList<>();
     private ViewFlipper flipper;
 
     @Override
@@ -43,27 +42,27 @@ public class TappingTask extends Activity{
         flipper.showNext();  // Switches to the next view
     }
 
-        @Override
+    @Override
     protected void onPause() {
         super.onPause();
     }
 
-    public void tapped(View view){
-        if(isDone) return;
+    public void tapped(View view) {
+        if (isDone) return;
 
-        if(!isRunning){
+        if (!isRunning) {
             startTapping();
         }
         TappingTaskTap tappingTaskTap = new TappingTaskTap(new Date().getTime(), view.getId());
         taps.add(tappingTaskTap);
-        if(view.getId() != lastTapTarget){
+        if (view.getId() != lastTapTarget) {
             counter++;
             updateCounter(counter);
         }
         lastTapTarget = view.getId();
     }
 
-    private void startTapping(){
+    private void startTapping() {
         isRunning = true;
         //Set up countdown timer.
         //final TextView mTextView = (TextView) findViewById(R.id.tapping_countdown);
@@ -81,22 +80,24 @@ public class TappingTask extends Activity{
                 save();
                 flipper.showNext();
                 //    Button button = (Button) findViewById(R.id.tapping_start_stop);
-            //    button.setVisibility(View.VISIBLE);
-            //    button.setText("Save");
+                //    button.setVisibility(View.VISIBLE);
+                //    button.setText("Save");
             }
         }.start();
     }
 
-    public void buttonDone(View v){
+    public void buttonDone(View v) {
         this.finish();
     }
 
-    private void updateCounter(int iCount){
+    private void updateCounter(int iCount) {
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
     }
 
-    /** Called when the user touches the button */
+    /**
+     * Called when the user touches the button
+     */
     private void save() {
         Data data = new Data();//Create new Data record
         data.setData(taps.toString()); //Save tap list
@@ -110,7 +111,8 @@ public class TappingTask extends Activity{
     public class TappingTaskTap {
         final Long timeStamp; //Millis
         final int buttonNo; //ID of button - unique to the two buttons
-        public TappingTaskTap(Long pTimeStamp, int pButtonNo){
+
+        public TappingTaskTap(Long pTimeStamp, int pButtonNo) {
             timeStamp = pTimeStamp;
             buttonNo = pButtonNo;
         }

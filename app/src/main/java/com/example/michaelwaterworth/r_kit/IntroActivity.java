@@ -19,14 +19,13 @@ import java.util.Locale;
 
 /**
  * Created by michaelwaterworth on 31/07/15. Copyright Michael Waterworth
-
  */
 public class IntroActivity extends FragmentActivity {
+    private final String TAG = "IntroActivity";
     // When requested, this adapter returns a DemoObjectFragment,
     // representing an object in the collection.
     private ViewFlipper flipper;
     private SignaturePad mSignaturePad;
-    private final String TAG = "IntroActivity";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +52,9 @@ public class IntroActivity extends FragmentActivity {
         flipper.showNext();  // Switches to the next view
     }
 
-    public void buttonDone(View v){
-        if(mSignaturePad.isEmpty()){
-            Toast.makeText(getApplicationContext(), R.string.empty_signature , Toast.LENGTH_SHORT).show();
+    public void buttonDone(View v) {
+        if (mSignaturePad.isEmpty()) {
+            Toast.makeText(getApplicationContext(), R.string.empty_signature, Toast.LENGTH_SHORT).show();
             return;
         }
         //Save the signature
@@ -67,7 +66,7 @@ public class IntroActivity extends FragmentActivity {
         try {
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm", Locale.UK).format(new Date());
 
-            FileOutputStream fos = openFileOutput(timeStamp + ".png",MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(timeStamp + ".png", MODE_PRIVATE);
 
             image.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.close();

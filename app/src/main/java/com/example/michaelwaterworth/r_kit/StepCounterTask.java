@@ -11,24 +11,23 @@ import android.util.Log;
 
 /**
  * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
-
  */
 public class StepCounterTask extends IntentService {
     private final String TAG = "StepCounterTask";
     private SensorManager mSensorManager;
     private Sensor mStepSensor;
 
-    public StepCounterTask(){
+    public StepCounterTask() {
         super("");
         initialise(getApplicationContext());
     }
 
-    public StepCounterTask(Context context){
+    public StepCounterTask(Context context) {
         super("");
         initialise(context);
     }
 
-    private void initialise(Context context){
+    private void initialise(Context context) {
         //hasSystemFeature()
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mStepSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);

@@ -9,16 +9,8 @@ import java.util.Calendar;
 
 /**
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
-
  */
 public class Task extends SugarRecord implements Parcelable {
-    private Long date;
-    private String className;
-    private String notificationTitle;
-    private String notifDesc;
-    private String extras;
-    private Boolean isService;
-
     public static final Creator<Task> CREATOR = new Creator<Task>() {
         @Override
         public Task createFromParcel(Parcel in) {
@@ -30,6 +22,23 @@ public class Task extends SugarRecord implements Parcelable {
             return new Task[size];
         }
     };
+    private Long date;
+    private String className;
+    private String notificationTitle;
+    private String notifDesc;
+    private String extras;
+    private Boolean isService;
+
+    public Task() {
+
+    }
+
+    public Task(Parcel in) {
+        date = in.readLong();
+        className = in.readString();
+        extras = in.readString();
+        isService = in.readInt() == 1;
+    }
 
     public Boolean getIsService() {
         return isService;
@@ -92,17 +101,6 @@ public class Task extends SugarRecord implements Parcelable {
         out.writeLong(date);
         out.writeString(className);
         out.writeString(extras);
-        out.writeInt(isService? 0: 1);
-    }
-
-    public Task(){
-
-    }
-
-    public Task(Parcel in) {
-        date = in.readLong();
-        className = in.readString();
-        extras = in.readString();
-        isService = in.readInt() == 1;
+        out.writeInt(isService ? 0 : 1);
     }
 }

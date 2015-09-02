@@ -1,6 +1,8 @@
 package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,7 +36,7 @@ public class MainActivity extends ActionBarActivity
     private CharSequence mTitle;
 
     /** Called when the user touches the button */
-    public void startService(View view) {
+    public void startService() {
         SchedulerService.startScheduler(getApplicationContext());
     }
 
@@ -44,19 +46,25 @@ public class MainActivity extends ActionBarActivity
         startActivity(intent);
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     private void addSchedule(String taskName){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
         Task t1  = new Task();
-//        t1.setDate(now);
-//        t1.setNotificationTitle("Biovici Reader");
-//        t1.setNotifDesc("Biovici Reader task");
-//        t1.setClassName("BioviciReaderTask");
         t1.setDate(now);
         t1.setNotificationTitle(taskName);
         t1.setNotifDesc(taskName);
         t1.setClassName(taskName);
-
         t1.setIsService();
         t1.save();
     }
@@ -119,6 +127,10 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        if(!isMyServiceRunning(SchedulerService.class)){
+            startService();
+        }
     }
 
     public void addTappingTask(View v){
@@ -149,9 +161,6 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
                 break;
         }
     }

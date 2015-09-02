@@ -1,7 +1,7 @@
 <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/intro_switcher"
-    tools:context=".SpatialMemoryTask"
+    tools:context=".BioviciReaderTask"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -145,37 +145,38 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_title"
-            android:layout_marginTop="57dp"
-            android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Calibrate device"
+                android:layout_marginTop="57dp"
+                android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_page1_subtitle"
-            android:layout_marginTop="57dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/task_biovici_page1_subtitle"
+                android:layout_marginTop="57dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center" />
 
-        <ImageView
-            android:layout_width="427dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/biovici"
-            android:layout_weight="0.63" />
+            <ImageView
+                android:layout_width="427dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/biovici"
+                android:layout_weight="0.63" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:onClick="buttonNext"
-            android:longClickable="true"
-            android:layout_gravity="center_horizontal"/>
+            <ProgressBar
+                android:id="@+id/calibrate_device_progress"
+                android:layout_width="100dp"
+                android:indeterminate="true"
+                android:indeterminateBehavior="cycle"
+                android:visibility="invisible"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
@@ -190,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_biovici_title"
+            android:text="Take reading"
             android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal" />
 
@@ -209,13 +210,39 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/biovici"
             android:layout_weight="0.63" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/page_4"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_completed_title"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/task_completed_subtitle"
+            android:layout_marginTop="57dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:onClick="buttonNext"
+            android:text="@string/done_button"
+            android:onClick="buttonDone"
             android:longClickable="true"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="bottom|right" />
     </LinearLayout>
 </ViewFlipper>

@@ -25,13 +25,21 @@
 
         <!-- Upload Service -->
         <service
-            android:name="com.example.michaelwaterworth.r_kit.UploadService"
+            android:name="com.alexbbb.uploadservice.UploadService"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
-                <action android:name="com.example.michaelwaterworth.r_kit.uploadservice.action.upload"/>
+                <action android:name="uk.co.threeequals.ratemyview.uploadservice.action.upload"/>
             </intent-filter>
         </service>
+
+        <receiver
+            android:name="UploadManager">
+            <intent-filter>
+                <action android:name="com.example.michaelwaterworth.r_kit"/>
+                <action android:name="com.example.michaelwaterworth.r_kit.uploadservice.broadcast.status"/>
+            </intent-filter>
+        </receiver>
 
         <!-- Start the service on boot -->
         <receiver android:name=".BootReceiver"

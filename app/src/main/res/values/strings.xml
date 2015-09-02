@@ -2,6 +2,9 @@
     <string name="app_name">R-Kit</string>
     <string name="app_package">com.example.michaelwaterworth.r_kit</string>
 
+    <string name="base_url">https://r-kit.com</string>
+    <string name="upload_path">/data/</string>
+
     <string name="title_section1">Upcoming tasks</string>
     <string name="title_section2">About</string>
 

@@ -4,6 +4,7 @@ import com.orm.SugarRecord;
 
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
@@ -41,5 +42,9 @@ class Data extends SugarRecord {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    static List<Data> serialiseAll(){
+        return Data.listAll(Data.class);
     }
 }

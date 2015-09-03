@@ -33,6 +33,10 @@ public class TappingTask extends FlipperActivityTask {
         super.onPause();
     }
 
+    /**
+     * Respond to button presses for the game buttons
+     * @param view Button view that has been pressed
+     */
     public void tapped(View view) {
         if (isFinished) return;
 
@@ -48,6 +52,10 @@ public class TappingTask extends FlipperActivityTask {
         lastTapTarget = view.getId();
     }
 
+    /**
+     * Starts the game loop
+     * Creates a timer and sets the game variables
+     */
     private void startTapping() {
         isRunning = true;
         //Set up countdown timer.
@@ -72,17 +80,17 @@ public class TappingTask extends FlipperActivityTask {
         }.start();
     }
 
-    public void buttonDone(View v) {
-        this.finish();
-    }
-
+    /**
+     * Update the view counter with the number of taps made
+     * @param iCount Number of successful taps made
+     */
     private void updateCounter(int iCount) {
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
     }
 
     /**
-     * Called when the user touches the button
+     * Save data from the task in to a new data record
      */
     private void save() {
         Data data = new Data();//Create new Data record
@@ -92,8 +100,9 @@ public class TappingTask extends FlipperActivityTask {
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
     }
 
-
-    // Tapping task tap - Used to store taps
+    /**
+     * Stores details about taps performed in the task
+     */
     public class TappingTaskTap {
         final Long timeStamp; //Millis
         final int buttonNo; //ID of button - unique to the two buttons

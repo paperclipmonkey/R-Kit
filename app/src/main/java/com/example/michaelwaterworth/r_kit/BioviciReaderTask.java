@@ -59,7 +59,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
-    // The BroadcastReceiver that listens for discovered devices and
+    // The BroadcastReceiver that listens for discovered devices
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -83,7 +83,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     };
 
-    // The on-click listener for all devices in the ListViews
+    // The on-click listener for all devices in the listViews
     private final AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
@@ -106,7 +106,12 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     };
 
-    /* Called when we have a return from turning on bluetooth activity has finished */
+    /**
+     * Called when a new intent returns
+     * @param requestCode Code we sent with the request
+     * @param resultCode Status code for return of request
+     * @param data Additional intent object
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
@@ -117,7 +122,9 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
-
+    /**
+     * Overrides pageNext functionality for view flipper object
+     */
     @Override
     public void pageNext() {
         flipper.showNext();  // Switches to the next view
@@ -126,7 +133,9 @@ public class BioviciReaderTask extends FlipperActivityTask {
         setTaskProgress((int) progress);
         if (flipper.getCurrentView().getId() == R.id.turn_on_bluetooth) {
             //Check if bluetooth is turned on, else display help.
-            checkBTState();
+            if(checkBTState()){
+                pageNext();
+            }
             return;
             //TODO - Show image / display text in text view.
         }
@@ -141,23 +150,35 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Function called when pressing button defined in XML
+     * @param view View that initiated request
+     */
     public void buttonTurnOnBluetooth(View view) {
         //Prompt user to turn on Bluetooth
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
     }
 
-    private void checkBTState() {
+    /**
+     * Check the status of Bluetooth. Used during paging to skip turning on bluetooth page
+     */
+    private boolean checkBTState() {
         // Emulator doesn't support Bluetooth and will return null
         if (btAdapter == null) {
             Toast.makeText(this, "Sorry bluetooth is not supported on your device", Toast.LENGTH_LONG).show();
         } else {
             if (btAdapter.isEnabled()) {
-                pageNext();
+                return true;
             }
         }
+        return false;
     }
 
+    /**
+     * Sends the specified string to the remote bluetooth device
+     * @param string Data string to send to remote bluetooth device. Should be appended with \n character sequence
+     */
     private void sendData(String string){
         if(outStream != null){
             try {
@@ -168,6 +189,9 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Start the event listening thread to handle incoming data over bluetooth
+     */
     private void beginListenForData() {
         final Handler handler = new Handler();
         final byte delimiter = 10; //This is the ASCII code for a newline character
@@ -212,6 +236,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         workerThread.start();
     }
 
+    /**
+     * Perform actions based on the event string returned by remote device
+     * @param string String event name
+     */
     private void respondToEvent(String string) {
         Log.d(TAG, "Received message: " + string);
         string = string.replace("\n", "").replace("\r", "");
@@ -239,6 +267,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Called when calibration started event sent
+     * If on calibrate page sets up spinner
+     */
     private void eventCalibrationStarted() {
         if (flipper.getCurrentView().getId() == R.id.calibrate_device && !isCalibrating) {
             Toast.makeText(getApplicationContext(), "Calibrating", Toast.LENGTH_SHORT).show();
@@ -248,6 +280,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Called when calibration ended event sent
+     * If on calibrate page stops spinner
+     */
     private void eventCalibrationFinished() {
         if (flipper.getCurrentView().getId() == R.id.calibrate_device && !hasCalibrated) {
             hasCalibrated = true;
@@ -264,6 +300,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Called when reading started event sent
+     * If on reading page sets up spinner
+     */
     private void eventReadingStarted() {
         if (flipper.getCurrentView().getId() == R.id.read_device && !isReading) {
             ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.reading_progress);
@@ -273,6 +313,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Called when reading ended event sent
+     * If on reading page stops spinner
+     */
     private void eventReadingFinished(int reading) {
         if (flipper.getCurrentView().getId() == R.id.read_device && !hasRead) {
             hasRead = true;
@@ -290,6 +334,10 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Function called when string confirming device is a Biovici reader is detected
+     * Initiates move to next page
+     */
     private void eventIsBiovici(){
         if(attemptConnectionTimeout != null){
             attemptConnectionTimeout.cancel();//Stop timeout
@@ -297,6 +345,11 @@ public class BioviciReaderTask extends FlipperActivityTask {
         }
     }
 
+    /**
+     * Attempt connection to bluetooth device using address
+     * @param adr Address of device to connect to
+     * @return Returns true if connection has been established, else false
+     */
     private boolean connectToDevice(String adr) {
         super.onResume();
 
@@ -343,6 +396,9 @@ public class BioviciReaderTask extends FlipperActivityTask {
         return true;
     }
 
+    /**
+     * Set up page to show bluetooth discovery. Initialise views
+     */
     private void bluetoothPair() {
         // Setup the window
 
@@ -414,9 +470,5 @@ public class BioviciReaderTask extends FlipperActivityTask {
 
         // Request discover from BluetoothAdapter
         mBtAdapter.startDiscovery();
-    }
-
-    public void buttonDone(View view) {
-        this.finish();
     }
 }

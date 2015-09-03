@@ -71,7 +71,7 @@
 
         <!-- Reading screen -->
         <string name="task_biovici_reading_title">Take reading</string>
-        <string name="task_biovici_read_subtitle">Place strip on tongue for 5 seconds then insert in to reader</string>
+        <string name="task_biovici_read_subtitle">Place strip on tongue for 5 seconds then plug in to reader</string>
         <string name="task_biovici_read_progress">Analysing</string>
 
 

@@ -209,5 +209,5 @@ public class SpatialMemoryTask extends FlipperActivityTask {
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
     }
-    
+
 }

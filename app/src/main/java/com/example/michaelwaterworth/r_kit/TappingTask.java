@@ -1,14 +1,11 @@
 package com.example.michaelwaterworth.r_kit;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,29 +14,18 @@ import java.util.List;
 /**
  * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
  */
-public class TappingTask extends Activity {
+public class TappingTask extends FlipperActivityTask {
     private final List<TappingTaskTap> taps = new ArrayList<>();
-    private Task task;
     private int lastTapTarget;
     private int counter;
     private boolean isRunning = false;
-    private boolean isDone = false;
-    private ViewFlipper flipper;
+    private boolean isFinished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tapping);
-
-        Intent intent = getIntent();
-        task = intent.getParcelableExtra("task");
         counter = 0;
-
-        flipper = (ViewFlipper) findViewById(R.id.tapping_switcher);
-    }
-
-    public void buttonNext(View view) {
-        flipper.showNext();  // Switches to the next view
     }
 
     @Override
@@ -48,7 +34,7 @@ public class TappingTask extends Activity {
     }
 
     public void tapped(View view) {
-        if (isDone) return;
+        if (isFinished) return;
 
         if (!isRunning) {
             startTapping();
@@ -74,7 +60,7 @@ public class TappingTask extends Activity {
 
             public void onFinish() {
                 isRunning = false;
-                isDone = true;
+                isFinished = true;
                 //mTextView.setText("Finished!");
                 Log.d("Tapping,", taps.toString());
                 save();
@@ -101,7 +87,7 @@ public class TappingTask extends Activity {
     private void save() {
         Data data = new Data();//Create new Data record
         data.setData(taps.toString()); //Save tap list
-        data.setTaskId(task.getId());
+        data.setTaskId(getTask().getId());
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
     }

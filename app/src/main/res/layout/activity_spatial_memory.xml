@@ -1,115 +1,114 @@
 <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/intro_switcher"
-    tools:context=".SpatialMemoryTask"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    tools:context=".SpatialMemoryTask">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/page_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_spatial_title"
             android:id="@+id/page1_title"
-            android:layout_marginTop="57dp"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_spatial_page1_subtitle"
-            android:id="@+id/page1_subtitle"
-            android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal"
-            android:gravity="center" />
+            android:layout_marginTop="57dp"
+            android:text="@string/task_spatial_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/page1_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="57dp"
+            android:gravity="center"
+            android:text="@string/task_spatial_page1_subtitle"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
             android:layout_width="427dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/memory_phone"
-            android:layout_weight="0.63" />
+            android:layout_weight="0.63"
+            android:src="@drawable/memory_phone" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:onClick="buttonNext"
+            android:layout_gravity="center_horizontal"
             android:longClickable="true"
-            android:layout_gravity="center_horizontal"/>
+            android:onClick="buttonNext"
+            android:text="@string/next_button" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/page_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/page_2"
         android:layout_margin="10dp"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <TextView
+            android:id="@+id/page2_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_spatial_title"
-            android:id="@+id/page2_title"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="57dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/task_spatial_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
         <TextView
+            android:id="@+id/page2_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/task_spatial_page2_subtitle"
-            android:id="@+id/page2_subtitle"
-            android:layout_marginTop="57dp"
             android:layout_gravity="center_horizontal"
-            android:gravity="center" />
+            android:layout_marginTop="57dp"
+            android:gravity="center"
+            android:text="@string/task_spatial_page2_subtitle"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
             android:layout_width="427dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/memory_phone"
-            android:layout_weight="0.63" />
-
+            android:layout_weight="0.63"
+            android:src="@drawable/memory_phone" />
 
 
         <Button
+            android:id="@+id/tapping_page1_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/get_started_button"
-            android:id="@+id/tapping_page1_next"
-            android:onClick="buttonNext"
+            android:layout_gravity="center_horizontal"
             android:longClickable="true"
-            android:layout_gravity="center_horizontal"/>
+            android:onClick="buttonNext"
+            android:text="@string/get_started_button" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/activity_memory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/activity_memory"
+        android:orientation="vertical"
         tools:context=".MemoryActivity">
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Memory"
-            android:id="@+id/textView2" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <GridLayout
             android:layout_width="300dip"
@@ -119,106 +118,106 @@
             android:rowCount="4">
 
             <Button
-                android:background="@drawable/memory_flower_default"
-                android:layout_width="@dimen/memory_flower_size"
-                android:layout_height="@dimen/memory_flower_size"
                 android:id="@+id/button_memory_1_1"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_row="0"
-                android:layout_column="0" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:layout_row="0"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
                 android:id="@+id/button_memory_1_2"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_row="0"
-                android:layout_column="1" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_row="0"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
                 android:id="@+id/button_memory_1_3"
+                android:layout_width="@dimen/memory_flower_size"
+                android:layout_height="@dimen/memory_flower_size"
+                android:layout_column="2"
                 android:layout_gravity="right"
-                android:onClick="tapped"
                 android:layout_row="0"
-                android:layout_column="2" />
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
 
             <Button
-                android:background="@drawable/memory_flower_default"
-                android:layout_width="@dimen/memory_flower_size"
-                android:layout_height="@dimen/memory_flower_size"
                 android:id="@+id/button_memory_2_1"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_row="1"
-                android:layout_column="0" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:layout_row="1"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
                 android:id="@+id/button_memory_2_2"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_row="1"
-                android:layout_column="1" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="1"
+                android:layout_gravity="right"
+                android:layout_row="1"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
                 android:id="@+id/button_memory_2_3"
+                android:layout_width="@dimen/memory_flower_size"
+                android:layout_height="@dimen/memory_flower_size"
+                android:layout_column="2"
                 android:layout_gravity="right"
-                android:onClick="tapped"
                 android:layout_row="1"
-                android:layout_column="2" />
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
 
             <Button
-                android:background="@drawable/memory_flower_default"
-                android:layout_width="@dimen/memory_flower_size"
-                android:layout_height="@dimen/memory_flower_size"
                 android:id="@+id/button_memory_3_1"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_row="2"
-                android:layout_column="0" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
+                android:layout_column="0"
+                android:layout_gravity="right"
+                android:layout_row="2"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
                 android:id="@+id/button_memory_3_2"
-                android:layout_gravity="right"
-                android:onClick="tapped"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_row="2"
-                android:layout_column="1" />
-
-            <Button
-                android:background="@drawable/memory_flower_default"
                 android:layout_width="@dimen/memory_flower_size"
                 android:layout_height="@dimen/memory_flower_size"
-                android:id="@+id/button_memory_3_3"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="1"
                 android:layout_gravity="right"
-                android:onClick="tapped"
                 android:layout_row="2"
-                android:layout_column="2" />
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
+
+            <Button
+                android:id="@+id/button_memory_3_3"
+                android:layout_width="@dimen/memory_flower_size"
+                android:layout_height="@dimen/memory_flower_size"
+                android:layout_column="2"
+                android:layout_gravity="right"
+                android:layout_row="2"
+                android:background="@drawable/memory_flower_default"
+                android:onClick="tapped" />
 
         </GridLayout>
 
@@ -227,32 +226,32 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/tapping_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0"
-                android:id="@+id/tapping_counter"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="57dp" />
+                android:layout_marginTop="57dp"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
+                android:id="@+id/tapping_countdown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0"
-                android:id="@+id/tapping_countdown"
                 android:layout_alignTop="@+id/tapping_counter"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
+                android:id="@+id/tapping_start_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start"
-                android:id="@+id/tapping_start_stop"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:longClickable="true" />
+                android:layout_centerVertical="true"
+                android:longClickable="true"
+                android:text="Start" />
         </RelativeLayout>
 
     </LinearLayout>

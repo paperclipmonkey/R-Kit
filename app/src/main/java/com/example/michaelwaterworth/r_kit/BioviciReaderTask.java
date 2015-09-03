@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +57,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_biovici_reader);
+        flipper = (ViewFlipper) findViewById(R.id.switcher);
         btAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 

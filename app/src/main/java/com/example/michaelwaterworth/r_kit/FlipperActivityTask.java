@@ -14,7 +14,6 @@ public abstract class FlipperActivityTask extends ActivityTask {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        flipper = (ViewFlipper) findViewById(R.id.switcher);
     }
 
     protected void setTaskProgress(int percentage){

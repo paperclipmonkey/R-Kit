@@ -3,6 +3,7 @@ package com.example.michaelwaterworth.r_kit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 /**
  * Created by michaelwaterworth on 03/09/15. Copyright Michael Waterworth
@@ -19,5 +20,9 @@ public class ActivityTask extends Activity{
 
     public Task getTask() {
         return task;
+    }
+
+    public void buttonDone(View view) {
+        this.finish();
     }
 }

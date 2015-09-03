@@ -46,6 +46,10 @@ public class SpatialMemoryTask extends FlipperActivityTask {
         this.finish();//Close activity
     }
 
+    /**
+     * Function called when views in XML are pressed
+     * @param view View pressed
+     */
     public void tapped(View view) {
         if (!isRunning) return;
         try {
@@ -205,7 +209,5 @@ public class SpatialMemoryTask extends FlipperActivityTask {
         TextView textView = (TextView) findViewById(R.id.tapping_counter);
         textView.setText("" + iCount);
     }
-
-    public void buttonStartStop(View view) {
-    }
+    
 }

@@ -1,7 +1,5 @@
 package com.example.michaelwaterworth.r_kit;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -9,16 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 
 /**
  * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
  */
-public class SpatialMemoryTask extends Activity {
-    private ViewFlipper flipper;
-    private Task task;
+public class SpatialMemoryTask extends FlipperActivityTask {
     private ArrayList<Button> targetList = new ArrayList<>();
     private int currentTarget = 0;
     private int levelLength = 3;
@@ -32,11 +27,6 @@ public class SpatialMemoryTask extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spatial_memory);
-
-        Intent intent = getIntent();
-        task = intent.getParcelableExtra("task");
-
-        flipper = (ViewFlipper) findViewById(R.id.intro_switcher);
     }
 
     @Override
@@ -50,7 +40,7 @@ public class SpatialMemoryTask extends Activity {
     public void save(View view) {
         Data data = new Data();//Create new Data record
         data.setData("" + score); //Add text
-        data.setTaskId(task.getId());
+        data.setTaskId(getTask().getId());
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
         this.finish();//Close activity

@@ -1,9 +1,21 @@
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/intro_switcher"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".BioviciReaderTask">
+
+    <ProgressBar
+        android:id="@+id/task_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+        android:layout_marginRight="5dp" />
+
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/switcher"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <!-- Intro screen -->
     <LinearLayout
@@ -311,3 +323,5 @@
             android:text="@string/done_button" />
     </LinearLayout>
 </ViewFlipper>
+
+</LinearLayout>

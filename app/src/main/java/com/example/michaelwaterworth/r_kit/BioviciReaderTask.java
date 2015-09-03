@@ -1,6 +1,5 @@
 package com.example.michaelwaterworth.r_kit;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -20,27 +19,27 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * Created by michaelwaterworth on 25/08/15. Copyright Michael Waterworth
  */
-public class BioviciReaderTask extends Activity {
+public class BioviciReaderTask extends FlipperActivityTask {
     private static final String TAG = "Biovici Reader";
     // Intent request codes
     private static final int REQUEST_ENABLE_BT = 3;
     // Well known SPP UUID
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private ViewFlipper flipper;
     private String deviceAddress;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private InputStream inStream = null;
+    private OutputStream outStream = null;
     private Thread workerThread;
     private byte[] readBuffer;
     private int readBufferPosition;
@@ -49,16 +48,18 @@ public class BioviciReaderTask extends Activity {
     private boolean hasCalibrated;
     private boolean isReading;
     private boolean hasRead;
-
-    /*
-    Bluetooth discover
-     */
-
-    // Member fields
+    private CountDownTimer attemptConnectionTimeout;
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_biovici_reader);
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
     // The BroadcastReceiver that listens for discovered devices and
-    // changes the title when discovery is finished
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -72,10 +73,8 @@ public class BioviciReaderTask extends Activity {
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 }
-                // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
-                setTitle(R.string.select_device);
                 if (mNewDevicesArrayAdapter.getCount() == 0) {
                     String noDevices = getResources().getText(R.string.none_found).toString();
                     mNewDevicesArrayAdapter.add(noDevices);
@@ -83,6 +82,7 @@ public class BioviciReaderTask extends Activity {
             }
         }
     };
+
     // The on-click listener for all devices in the ListViews
     private final AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
@@ -93,14 +93,20 @@ public class BioviciReaderTask extends Activity {
             String info = ((TextView) v).getText().toString();
             deviceAddress = info.substring(info.length() - 17);
             if(connectToDevice(deviceAddress)) {
-                pageNext();
+                attemptConnectionTimeout = new CountDownTimer(5000, 5000) {
+                    public void onTick(long millisUntilFinished) {}
+
+                    public void onFinish() {
+                        Toast.makeText(getApplicationContext(), "failed to connect", Toast.LENGTH_LONG).show();
+                    }
+                }.start();
             } else {
-                Toast.makeText(getApplicationContext(), "Could not connect", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "failed to connect", Toast.LENGTH_LONG).show();
             }
         }
     };
 
-    /* Called when the second activity's finished */
+    /* Called when we have a return from turning on bluetooth activity has finished */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
@@ -111,20 +117,13 @@ public class BioviciReaderTask extends Activity {
         }
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_biovici_reader);
-        flipper = (ViewFlipper) findViewById(R.id.intro_switcher);
-        btAdapter = BluetoothAdapter.getDefaultAdapter();
-    }
-
-    public void buttonNext(View view) {
-        pageNext();
-    }
-
-    private void pageNext() {
+    public void pageNext() {
         flipper.showNext();  // Switches to the next view
+        float progress = ((float) flipper.getDisplayedChild() / (float) flipper.getChildCount()) * 100;
+
+        setTaskProgress((int) progress);
         if (flipper.getCurrentView().getId() == R.id.turn_on_bluetooth) {
             //Check if bluetooth is turned on, else display help.
             checkBTState();
@@ -151,11 +150,20 @@ public class BioviciReaderTask extends Activity {
     private void checkBTState() {
         // Emulator doesn't support Bluetooth and will return null
         if (btAdapter == null) {
-            Log.e(TAG, "btAdapter null");
+            Toast.makeText(this, "Sorry bluetooth is not supported on your device", Toast.LENGTH_LONG).show();
         } else {
             if (btAdapter.isEnabled()) {
-                Log.d(TAG, "...Bluetooth is enabled...");
                 pageNext();
+            }
+        }
+    }
+
+    private void sendData(String string){
+        if(outStream != null){
+            try {
+                outStream.write(string.getBytes());
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
             }
         }
     }
@@ -216,6 +224,9 @@ public class BioviciReaderTask extends Activity {
                 break;
             case "Reading started":
                 eventReadingStarted();
+                break;
+            case "isBiovici:true":
+                eventIsBiovici();
                 break;
         }
         if (string.contains("Reading:")) {
@@ -279,6 +290,13 @@ public class BioviciReaderTask extends Activity {
         }
     }
 
+    private void eventIsBiovici(){
+        if(attemptConnectionTimeout != null){
+            attemptConnectionTimeout.cancel();//Stop timeout
+            pageNext();
+        }
+    }
+
     private boolean connectToDevice(String adr) {
         super.onResume();
 
@@ -308,13 +326,15 @@ public class BioviciReaderTask extends Activity {
                 btSocket.close();
             } catch (IOException e2) {
                 Log.e(TAG, "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
-                return false;
             }
+            return false;
         }
 
         // Create a data stream so we can talk to server.
         try {
             inStream = btSocket.getInputStream();
+            outStream = btSocket.getOutputStream();
+            sendData("isBiovici\n");
             beginListenForData();
         } catch (IOException e) {
             Log.e(TAG, "In onResume() and output stream creation failed:" + e.getMessage() + ".");

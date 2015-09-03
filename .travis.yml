@@ -14,4 +14,4 @@ notifications:
 sudo: false
 
 script:
-  - ./gradlew clean cC
+  - ./gradlew clean build

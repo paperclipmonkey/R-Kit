@@ -10,19 +10,19 @@
 
     <item
         android:id="@+id/action_biovici"
-        android:title="New Biovici"
+        android:title="@string/menu_new_biovici"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_spatial"
-        android:title="New Spatial"
+        android:title="@string/menu_new_spatial"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_tapping"
-        android:title="New Tapping"
+        android:title="@string/menu_new_tapping"
         android:orderInCategory="100"
         app:showAsAction="never" />
 

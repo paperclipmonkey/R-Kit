@@ -11,7 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Diary"
+        android:text="@string/task_diary_title"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -25,5 +25,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:onClick="save"
-        android:text="Done" />
+        android:text="@string/done_button" />
 </LinearLayout>

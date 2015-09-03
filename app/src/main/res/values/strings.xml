@@ -95,5 +95,13 @@
     <string name="task_spatial_page4_title">Tap the flowers in the order they lit up</string>
     <string name="task_spatial_page5_title">Try Again</string>
     <string name="task_spatial_page5_subtitle">You didn\'t quite make it through that time. Tap Next to continue.</string>
+    <string name="task_diary_title">Diary</string>
+    <string name="task_memory_memory">Memory</string>
+    <string name="task_tapping_0">0</string>
+    <string name="start">Start</string>
+    <string name="task_tapping_total_taps">Total Taps</string>
+    <string name="menu_new_biovici">New Biovici</string>
+    <string name="menu_new_spatial">New Spatial</string>
+    <string name="menu_new_tapping">New Tapping</string>
 
 </resources>

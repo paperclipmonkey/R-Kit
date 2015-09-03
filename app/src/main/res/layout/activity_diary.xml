@@ -17,13 +17,14 @@
     <EditText
         android:id="@+id/diary_text"
         android:layout_width="match_parent"
+        android:hint="@string/task_diary_text_hint"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/button_diary_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:onClick="save"
         android:text="@string/done_button" />
 </LinearLayout>

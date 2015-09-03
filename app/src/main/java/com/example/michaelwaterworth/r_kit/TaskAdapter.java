@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -46,7 +45,7 @@ class TaskAdapter extends BaseAdapter {
         }
 
         Task ti = mTasks.get(position);
-        ImageView icon = (ImageView) view.findViewById(R.id.task_image);
+        //ImageView icon = (ImageView) view.findViewById(R.id.task_image);
         TextView title = (TextView) view.findViewById(R.id.task_title);
         TextView description = (TextView) view.findViewById(R.id.task_description);
         TextView dateView = (TextView) view.findViewById(R.id.task_date);

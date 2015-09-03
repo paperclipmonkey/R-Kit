@@ -21,7 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by michaelwaterworth on 21/07/15.
+ * Created by michaelwaterworth on 21/07/15. Copyright Michael Waterworth
+
  */
 public class UploadManager extends BroadcastReceiver {
     private final String TAGLISTEN = "Broadcast Receiver";
@@ -166,11 +167,9 @@ public class UploadManager extends BroadcastReceiver {
             try {
                 JSONObject jsonObject = new JSONObject(serverResponseMessage);
 
-                if (jsonObject != null) {
-                    buildSuccessNotification(context, jsonObject);
+                buildSuccessNotification(context, jsonObject);
 
-                    purgeData();
-                }
+                purgeData();
             } catch (JSONException e) {
                 e.printStackTrace();
             }

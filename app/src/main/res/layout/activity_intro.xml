@@ -45,7 +45,7 @@
             android:id="@+id/tapping_page1_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:longClickable="true"
             android:onClick="buttonNext"
             android:text="@string/next_button" />
@@ -90,7 +90,7 @@
             android:id="@+id/tapping_page3_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:longClickable="true"
             android:onClick="buttonNext"
             android:text="@string/get_started_button" />

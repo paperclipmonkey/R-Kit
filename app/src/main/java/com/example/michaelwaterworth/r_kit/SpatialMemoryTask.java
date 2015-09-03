@@ -149,7 +149,7 @@ public class SpatialMemoryTask extends FlipperActivityTask {
 
         Log.d("MemSeq", "Level no." + levelLength);
 
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+        new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //Set previous item as default
@@ -191,7 +191,7 @@ public class SpatialMemoryTask extends FlipperActivityTask {
         isRunning = true;
         //Set up countdown timer.
         final TextView mTextView = (TextView) findViewById(R.id.tapping_countdown);
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+        new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 mTextView.setText("seconds remaining: " + millisUntilFinished / 1000);

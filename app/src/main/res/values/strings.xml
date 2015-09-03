@@ -75,6 +75,12 @@
         <string name="task_biovici_read_progress">Analysing</string>
 
 
+    <string name="task_biovici_checkmark_description">Checkmark</string>
+    <string name="task_biovici_read_description">Read device</string>
+    <string name="task_biovici_calibrate_description">Calibrate</string>
+    <string name="task_biovici_scan_description">Scan</string>
+    <string name="task_biovici_bluetooth_description">Bluetooth</string>
+
     <!-- Tapping Task -->
     <string name="task_tapping_page3_title">Tap the buttons as quickly as you can using two fingers.</string>
     <string name="task_tapping_button">Tap</string>
@@ -103,5 +109,7 @@
     <string name="menu_new_biovici">New Biovici</string>
     <string name="menu_new_spatial">New Spatial</string>
     <string name="menu_new_tapping">New Tapping</string>
+    <string name="task_biovici_biovici_logo_description">Biovici Logo</string>
+    <string name="task_diary_text_hint">Diary info</string>
 
 </resources>

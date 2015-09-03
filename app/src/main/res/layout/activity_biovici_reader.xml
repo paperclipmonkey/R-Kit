@@ -50,6 +50,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.63"
+            android:contentDescription="@string/task_biovici_biovici_logo_description"
             android:src="@drawable/biovici" />
 
         <Button
@@ -96,6 +97,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.63"
             android:alpha="0.5"
+        android:contentDescription="@string/task_biovici_bluetooth_description"
             android:src="@drawable/bluetooth" />
 
         <Button
@@ -122,6 +124,7 @@
             android:layout_height="30dp"
             android:layout_gravity="right"
             android:alpha="0.5"
+            android:contentDescription="@string/task_biovici_scan_description"
             android:background="@drawable/ic_menu_refresh" />
 
         <TextView
@@ -153,7 +156,7 @@
         <ListView
             android:id="@+id/paired_devices"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
@@ -161,6 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="@string/title_other_devices"
             android:visibility="gone" />
 
@@ -221,6 +225,7 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
             android:alpha="0.5"
+            android:contentDescription="@string/task_biovici_calibrate_description"
             android:src="@drawable/biovici_reader_calibrate" />
 
     </RelativeLayout>
@@ -277,6 +282,7 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
             android:alpha="0.5"
+            android:contentDescription="@string/task_biovici_read_description"
             android:src="@drawable/biovici_reader_read" />
 
     </RelativeLayout>
@@ -310,9 +316,9 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
             android:alpha="0.5"
+            android:contentDescription="@string/task_biovici_checkmark_description"
             android:src="@drawable/check" />
 
         <Button

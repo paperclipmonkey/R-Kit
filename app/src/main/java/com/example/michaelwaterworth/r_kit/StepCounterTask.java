@@ -1,5 +1,6 @@
 package com.example.michaelwaterworth.r_kit;
 
+import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.util.Log;
 
 /**
@@ -27,6 +29,7 @@ public class StepCounterTask extends IntentService {
         initialise(context);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void initialise(Context context) {
         //hasSystemFeature()
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);

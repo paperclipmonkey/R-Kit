@@ -60,7 +60,7 @@ public class TappingTask extends FlipperActivityTask {
         isRunning = true;
         //Set up countdown timer.
         //final TextView mTextView = (TextView) findViewById(R.id.tapping_countdown);
-        CountDownTimer countDownTimer = new CountDownTimer(20000, 1000) {
+        new CountDownTimer(20000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 //mTextView.setText("seconds remaining: " + millisUntilFinished / 1000);

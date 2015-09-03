@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Created by michaelwaterworth on 03/09/15. Copyright Michael Waterworth
  */
-public class ActivityTask extends Activity{
+abstract class ActivityTask extends Activity{
     private Task task;
 
     @Override

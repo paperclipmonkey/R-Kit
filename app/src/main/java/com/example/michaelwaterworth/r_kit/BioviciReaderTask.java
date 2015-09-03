@@ -15,7 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -92,8 +92,11 @@ public class BioviciReaderTask extends Activity {
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             deviceAddress = info.substring(info.length() - 17);
-            connectDevice();
-            pageNext();
+            if(connectToDevice(deviceAddress)) {
+                pageNext();
+            } else {
+                Toast.makeText(getApplicationContext(), "Could not connect", Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -157,11 +160,6 @@ public class BioviciReaderTask extends Activity {
         }
     }
 
-    private void connectDevice() {
-        // Get the device MAC address
-        connectToDevice(deviceAddress);
-    }
-
     private void beginListenForData() {
         final Handler handler = new Handler();
         final byte delimiter = 10; //This is the ASCII code for a newline character
@@ -196,6 +194,7 @@ public class BioviciReaderTask extends Activity {
                             }
                         }
                     } catch (IOException ex) {
+                        Log.e(TAG, ex.getMessage());
                         stopWorker = true;
                     }
                 }
@@ -233,17 +232,19 @@ public class BioviciReaderTask extends Activity {
         if (flipper.getCurrentView().getId() == R.id.calibrate_device && !isCalibrating) {
             Toast.makeText(getApplicationContext(), "Calibrating", Toast.LENGTH_SHORT).show();
             isCalibrating = true;
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            calibrateDeviceSpinner.setVisibility(View.VISIBLE);
         }
     }
 
     private void eventCalibrationFinished() {
         if (flipper.getCurrentView().getId() == R.id.calibrate_device && !hasCalibrated) {
             hasCalibrated = true;
-            //TODO - Show message that it's been calibrated
-            Toast.makeText(getApplicationContext(), "Calibrated!", Toast.LENGTH_SHORT).show();
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            calibrateDeviceSpinner.setVisibility(View.INVISIBLE);
+            Toast.makeText(getApplicationContext(), "Calibrated", Toast.LENGTH_SHORT).show();
             new CountDownTimer(2000, 2000) {
-                public void onTick(long millisUntilFinished) {
-                }
+                public void onTick(long millisUntilFinished) {}
 
                 public void onFinish() {
                     pageNext();
@@ -254,30 +255,22 @@ public class BioviciReaderTask extends Activity {
 
     private void eventReadingStarted() {
         if (flipper.getCurrentView().getId() == R.id.read_device && !isReading) {
-            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.reading_progress);
             calibrateDeviceSpinner.setVisibility(View.VISIBLE);
             isReading = true;
             Toast.makeText(getApplicationContext(), "Reading started", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    /*
-    - - - - - - - - - - - - - - - - - - - -
-    Discover Bluetooth code
-    - - - - - - - - - - - - - - - - - - - -
-    */
-
     private void eventReadingFinished(int reading) {
         if (flipper.getCurrentView().getId() == R.id.read_device && !hasRead) {
             hasRead = true;
-            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.calibrate_device_progress);
+            ProgressBar calibrateDeviceSpinner = (ProgressBar) findViewById(R.id.reading_progress);
             calibrateDeviceSpinner.setVisibility(View.INVISIBLE);
             //Show message that a reading has been taken
-            Toast.makeText(getApplicationContext(), "Reading taken: " + reading, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Reading taken", Toast.LENGTH_SHORT).show();
             new CountDownTimer(2000, 2000) {
-                public void onTick(long millisUntilFinished) {
-                }
+                public void onTick(long millisUntilFinished) {}
 
                 public void onFinish() {
                     pageNext();
@@ -286,7 +279,7 @@ public class BioviciReaderTask extends Activity {
         }
     }
 
-    private void connectToDevice(String adr) {
+    private boolean connectToDevice(String adr) {
         super.onResume();
 
         // Set up a pointer to the remote node using it's address.
@@ -300,6 +293,7 @@ public class BioviciReaderTask extends Activity {
             btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
         } catch (IOException e) {
             Log.e(TAG, "In onResume() and socket create failed: " + e.getMessage() + ".");
+            return false;
         }
 
         // Discovery is resource intensive.  Make sure it isn't going on
@@ -314,6 +308,7 @@ public class BioviciReaderTask extends Activity {
                 btSocket.close();
             } catch (IOException e2) {
                 Log.e(TAG, "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+                return false;
             }
         }
 
@@ -323,18 +318,19 @@ public class BioviciReaderTask extends Activity {
             beginListenForData();
         } catch (IOException e) {
             Log.e(TAG, "In onResume() and output stream creation failed:" + e.getMessage() + ".");
+            return false;
         }
+        return true;
     }
 
     private void bluetoothPair() {
         // Setup the window
 
         // Initialize the button to perform device discovery
-        Button scanButton = (Button) findViewById(R.id.button_scan);
+        ImageButton scanButton = (ImageButton) findViewById(R.id.button_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
-                v.setVisibility(View.GONE);
             }
         });
 

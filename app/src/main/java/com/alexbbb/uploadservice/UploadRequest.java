@@ -155,7 +155,7 @@ public class UploadRequest {
     /**
      * Gets the HTTP method to use.
      * 
-     * @return
+     * @return String
      */
     protected String getMethod() {
         return method;
@@ -164,7 +164,7 @@ public class UploadRequest {
     /**
      * Gets the upload ID of this request.
      * 
-     * @return
+     * @return String
      */
     protected String getUploadId() {
         return uploadId;
@@ -173,7 +173,7 @@ public class UploadRequest {
     /**
      * Gets the URL of the server side script that will handle the multipart form upload.
      * 
-     * @return
+     * @return String
      */
     protected String getServerUrl() {
         return url;
@@ -182,7 +182,7 @@ public class UploadRequest {
     /**
      * Gets the list of the files that has to be uploaded.
      * 
-     * @return
+     * @return String
      */
     protected ArrayList<FileToUpload> getFilesToUpload() {
         return filesToUpload;
@@ -191,7 +191,7 @@ public class UploadRequest {
     /**
      * Gets the list of the headers.
      * 
-     * @return
+     * @return String
      */
     protected ArrayList<NameValue> getHeaders() {
         return headers;
@@ -200,7 +200,7 @@ public class UploadRequest {
     /**
      * Gets the list of the parameters.
      * 
-     * @return
+     * @return String
      */
     protected ArrayList<NameValue> getParameters() {
         return parameters;
@@ -209,7 +209,7 @@ public class UploadRequest {
     /**
      * Gets the upload notification configuration.
      * 
-     * @return
+     * @return String
      */
     protected UploadNotificationConfig getNotificationConfig() {
         return notificationConfig;
@@ -218,7 +218,7 @@ public class UploadRequest {
     /**
      * Gets the application context.
      * 
-     * @return
+     * @return String
      */
     protected Context getContext() {
         return context;
@@ -246,7 +246,7 @@ public class UploadRequest {
     /**
      * Sets the intent to be executed when the user taps on the upload progress notification.
      * 
-     * @param intent
+     * @param intent String
      */
     public final void setNotificationClickIntent(Intent intent) {
         notificationConfig.setClickIntent(intent);

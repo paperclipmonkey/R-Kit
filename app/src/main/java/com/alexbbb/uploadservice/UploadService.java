@@ -239,7 +239,7 @@ public class UploadService extends IntentService {
             try {
                 if (reader != null)
                     reader.close();
-            } catch (Exception readerExc) {
+            } catch (Exception ignored) {
             }
         }
 
@@ -247,27 +247,18 @@ public class UploadService extends IntentService {
     }
 
     private String getBoundary() {
-        final StringBuilder builder = new StringBuilder();
 
-        builder.append("---------------------------").append(System.currentTimeMillis());
-
-        return builder.toString();
+        return "---------------------------" + System.currentTimeMillis();
     }
 
     private byte[] getBoundaryBytes(final String boundary) throws UnsupportedEncodingException {
-        final StringBuilder builder = new StringBuilder();
 
-        builder.append(NEW_LINE).append(TWO_HYPHENS).append(boundary).append(NEW_LINE);
-
-        return builder.toString().getBytes("US-ASCII");
+        return (NEW_LINE + TWO_HYPHENS + boundary + NEW_LINE).getBytes("US-ASCII");
     }
 
     private byte[] getTrailerBytes(final String boundary) throws UnsupportedEncodingException {
-        final StringBuilder builder = new StringBuilder();
 
-        builder.append(NEW_LINE).append(TWO_HYPHENS).append(boundary).append(TWO_HYPHENS).append(NEW_LINE);
-
-        return builder.toString().getBytes("US-ASCII");
+        return (NEW_LINE + TWO_HYPHENS + boundary + TWO_HYPHENS + NEW_LINE).getBytes("US-ASCII");
     }
 
     private HttpURLConnection getMultipartHttpURLConnection(final String url, final String method,
@@ -387,7 +378,7 @@ public class UploadService extends IntentService {
         if (stream != null) {
             try {
                 stream.close();
-            } catch (Exception exc) {
+            } catch (Exception ignored) {
             }
         }
     }
@@ -397,7 +388,7 @@ public class UploadService extends IntentService {
             try {
                 stream.flush();
                 stream.close();
-            } catch (Exception exc) {
+            } catch (Exception ignored) {
             }
         }
     }
@@ -406,7 +397,7 @@ public class UploadService extends IntentService {
         if (connection != null) {
             try {
                 connection.disconnect();
-            } catch (Exception exc) {
+            } catch (Exception ignored) {
             }
         }
     }

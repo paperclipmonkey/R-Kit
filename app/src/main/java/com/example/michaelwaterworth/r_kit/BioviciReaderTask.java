@@ -399,6 +399,34 @@ public class BioviciReaderTask extends FlipperActivityTask {
     }
 
     /**
+     * Close input and output streams and make sure socket is closed.
+     * This method will be used during shutdown() to ensure that the connection is properly closed during a shutdown.
+     * @return
+     */
+    private void closeConnection() {
+        if (inStream != null) {
+            try {inStream.close();} catch (Exception e) {}
+            inStream = null;
+        }
+
+        if (outStream != null) {
+            try {outStream.close();} catch (Exception e) {}
+            outStream = null;
+        }
+
+        if (btSocket != null) {
+            try {btSocket.close();} catch (Exception e) {}
+            btSocket = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onStop();
+        closeConnection();
+    }
+
+    /**
      * Set up page to show bluetooth discovery. Initialise views
      */
     private void bluetoothPair() {

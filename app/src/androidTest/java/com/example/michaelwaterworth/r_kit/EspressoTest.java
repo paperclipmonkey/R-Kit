@@ -19,6 +19,7 @@ package com.example.michaelwaterworth.r_kit;
  * limitations under the License.
  */
 
+import android.bluetooth.BluetoothAdapter;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -40,6 +41,13 @@ public class EspressoTest {
 
     @Test
     public void clickButtonBluetoothOff() {
+        BluetoothAdapter.getDefaultAdapter().enable();
+        // Changing state of bluetooth can take 5 seconds.
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 //        BluetoothAdapter.getDefaultAdapter().disable();
 //        // Find Button and Click on it

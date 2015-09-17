@@ -53,7 +53,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.63"
                 android:contentDescription="@string/task_biovici_biovici_logo_description"
-                android:src="@drawable/biovici" />
+                android:src="@drawable/ic_note_outline_grey" />
 
             <Button
                 android:id="@+id/biovici_page1_next"
@@ -65,7 +65,7 @@
                 android:text="@string/get_started_button" />
         </LinearLayout>
 
-        <!-- Intro screen -->
+        <!-- Diary screen -->
         <LinearLayout
             android:id="@+id/diary_page"
             android:layout_width="match_parent"

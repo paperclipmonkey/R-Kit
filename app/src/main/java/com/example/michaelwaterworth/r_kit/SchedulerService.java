@@ -1,6 +1,7 @@
 package com.example.michaelwaterworth.r_kit;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,6 +9,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -70,7 +74,7 @@ public class SchedulerService extends BroadcastReceiver {
 
         cal.add(Calendar.MINUTE, 5);
         long eTime = cal.getTimeInMillis() / 1000;
-        List<Task> tasks = Task.find(Task.class, "date > ? and date < ?", "" + sTime, "" + eTime);
+        List<Task> tasks = Task.find(Task.class, "date > ? and date < ? and hasnotified = 0", "" + sTime, "" + eTime);
         String TAG = "Scheduler";
         Log.d(TAG, tasks.toString());
         for (Task task : tasks) {
@@ -89,6 +93,13 @@ public class SchedulerService extends BroadcastReceiver {
         resultIntent.putExtra("task", task);
         context.startService(resultIntent);
     }
+//
+//    public PendingIntent existAlarm(int id) {
+//        Intent intent = new Intent(this, alarmreceiver.class);
+//        intent.setAction(Intent.ACTION_VIEW);
+//        PendingIntent test = PendingIntent.getBroadcast(this, id + selectedPosition, intent, PendingIntent.FLAG_NO_CREATE);
+//        return test;
+//    }
 
     private void createNotification(Context context, Task task) {
         NotificationCompat.Builder mBuilder =
@@ -102,6 +113,13 @@ public class SchedulerService extends BroadcastReceiver {
         resultIntent.setClassName(context, context.getPackageName() + "." + task.getClassName());
         resultIntent.putExtra("task", task);
         mBuilder.setAutoCancel(true);//Automatically dismiss on click
+
+        mBuilder.setLights(Color.BLUE, 500, 500);
+        long[] pattern = {500,500,500,500,500,500,500,500,500};
+        mBuilder.setVibrate(pattern);
+        mBuilder.setStyle(new NotificationCompat.InboxStyle());
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        mBuilder.setSound(alarmSound);
 
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
@@ -123,9 +141,15 @@ public class SchedulerService extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        //TODO - Fix issue of replacing previous notification
+
+        Notification notification = mBuilder.build();
+        notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
 
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(Integer.parseInt(task.getId() + ""), mBuilder.build());
+        mNotificationManager.notify(Integer.parseInt(task.getId() + ""), notification);
+
+        // Update the task making sure it isn't used a second time.
+        task.setHasnotified(true);
+        task.save();
     }
 }

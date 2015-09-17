@@ -422,7 +422,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
 
     @Override
     protected void onDestroy() {
-        super.onStop();
+        super.onDestroy();
         closeConnection();
     }
 

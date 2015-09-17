@@ -6,7 +6,8 @@
     <string name="upload_path">/data/</string>
 
     <string name="title_section1">Upcoming tasks</string>
-    <string name="title_section2">About</string>
+    <string name="title_section2">Saved data</string>
+    <string name="title_section3">About</string>
 
 
     <string name="upcoming_today">Today</string>
@@ -101,15 +102,23 @@
     <string name="task_spatial_page4_title">Tap the flowers in the order they lit up</string>
     <string name="task_spatial_page5_title">Try Again</string>
     <string name="task_spatial_page5_subtitle">You didn\'t quite make it through that time. Tap Next to continue.</string>
-    <string name="task_diary_title">Diary</string>
     <string name="task_memory_memory">Memory</string>
+
+
     <string name="task_tapping_0">0</string>
     <string name="start">Start</string>
     <string name="task_tapping_total_taps">Total Taps</string>
     <string name="menu_new_biovici">New Biovici</string>
     <string name="menu_new_spatial">New Spatial</string>
     <string name="menu_new_tapping">New Tapping</string>
+    <string name="menu_new_diary">New Diary</string>
     <string name="task_biovici_biovici_logo_description">Biovici Logo</string>
+
+
+    <!-- Diary Task -->
     <string name="task_diary_text_hint">Diary info</string>
+    <string name="task_diary_title">Diary Task</string>
+    <string name="task_diary_subtitle">Please add a new diary entry</string>
+
 
 </resources>

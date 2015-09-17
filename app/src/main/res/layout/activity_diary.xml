@@ -7,24 +7,136 @@
     android:orientation="vertical"
     tools:context=".DiaryActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/task_diary_title"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ProgressBar
+        android:id="@+id/task_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+        android:layout_marginRight="5dp" />
 
-    <EditText
-        android:id="@+id/diary_text"
-        android:layout_width="match_parent"
-        android:hint="@string/task_diary_text_hint"
-        android:layout_height="wrap_content" />
+    <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/switcher"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button
-        android:id="@+id/button_diary_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:onClick="save"
-        android:text="@string/done_button" />
+        <!-- Intro screen -->
+        <LinearLayout
+            android:id="@+id/welcome_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/page1_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="57dp"
+                android:text="@string/task_diary_title"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/page1_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="57dp"
+                android:gravity="center"
+                android:text="@string/task_diary_subtitle"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageView
+                android:layout_width="427dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.63"
+                android:contentDescription="@string/task_biovici_biovici_logo_description"
+                android:src="@drawable/biovici" />
+
+            <Button
+                android:id="@+id/biovici_page1_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:longClickable="true"
+                android:onClick="buttonNext"
+                android:text="@string/get_started_button" />
+        </LinearLayout>
+
+        <!-- Intro screen -->
+        <LinearLayout
+            android:id="@+id/diary_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_diary_title"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/diary_text"
+                android:layout_width="match_parent"
+                android:hint="@string/task_diary_text_hint"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/button_diary_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:onClick="save"
+                android:text="@string/done_button" />
+        </LinearLayout>
+
+        <!-- Thanks screen -->
+        <LinearLayout
+            android:id="@+id/thanks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="57dp"
+                android:text="@string/task_completed_title"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="57dp"
+                android:gravity="center"
+                android:text="@string/task_completed_subtitle"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:alpha="0.5"
+                android:contentDescription="@string/task_biovici_checkmark_description"
+                android:src="@drawable/check" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:longClickable="true"
+                android:onClick="buttonDone"
+                android:text="@string/done_button" />
+        </LinearLayout>
+    </ViewFlipper>
 </LinearLayout>

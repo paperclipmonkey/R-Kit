@@ -26,4 +26,10 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_diary"
+        android:title="@string/menu_new_diary"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>

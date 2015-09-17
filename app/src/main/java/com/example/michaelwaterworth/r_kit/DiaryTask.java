@@ -1,22 +1,23 @@
 package com.example.michaelwaterworth.r_kit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 /**
  * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
  */
-public class DiaryTask extends Activity {
+public class DiaryTask extends FlipperActivityTask {
     private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
+        flipper = (ViewFlipper) findViewById(R.id.switcher);
 
         Intent intent = getIntent();
         task = intent.getParcelableExtra("task");
@@ -37,6 +38,8 @@ public class DiaryTask extends Activity {
         data.setTaskId(task.getId());
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
-        this.finish();//Close activity
+        //this.finish();//Close activity
+        hideKeyboard();
+        pageNext();
     }
 }

@@ -28,9 +28,10 @@ public class Task extends SugarRecord implements Parcelable {
     private String notifDesc;
     private String extras;
     private Boolean isService;
+    private Boolean hasnotified;
 
     public Task() {
-
+        hasnotified = false;
     }
 
     public Task(Parcel in) {
@@ -38,6 +39,7 @@ public class Task extends SugarRecord implements Parcelable {
         className = in.readString();
         extras = in.readString();
         isService = in.readInt() == 1;
+        hasnotified = in.readInt() == 1;
     }
 
     public Boolean getIsService() {
@@ -72,6 +74,14 @@ public class Task extends SugarRecord implements Parcelable {
         this.notificationTitle = notificationTitle;
     }
 
+    public Boolean getHasnotified() {
+        return hasnotified;
+    }
+
+    public void setHasnotified(Boolean hasnotified) {
+        this.hasnotified = hasnotified;
+    }
+
     public String getExtras() {
         return extras;
     }
@@ -102,5 +112,6 @@ public class Task extends SugarRecord implements Parcelable {
         out.writeString(className);
         out.writeString(extras);
         out.writeInt(isService ? 0 : 1);
+        out.writeInt(hasnotified ? 0 : 1);
     }
 }

@@ -6,11 +6,11 @@ import android.test.suitebuilder.annotation.SmallTest;
 /**
  * Created by michaelwaterworth on 03/09/15. Copyright Michael Waterworth
  */
-public class IntroActivityTest extends ActivityInstrumentationTestCase2<IntroActivity> {
-    private IntroActivity mTestActivity;
+public class SpatialMemoryTaskTest extends ActivityInstrumentationTestCase2<SpatialMemoryTask> {
+    private SpatialMemoryTask mTestActivity;
 
-    public IntroActivityTest() {
-        super(IntroActivity.class);
+    public SpatialMemoryTaskTest() {
+        super(SpatialMemoryTask.class);
     }
 
     @Override

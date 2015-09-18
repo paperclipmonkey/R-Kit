@@ -1,6 +1,5 @@
 package com.example.michaelwaterworth.r_kit;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,16 +10,12 @@ import android.widget.ViewFlipper;
  * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
  */
 public class DiaryTask extends FlipperActivityTask {
-    private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
         flipper = (ViewFlipper) findViewById(R.id.switcher);
-
-        Intent intent = getIntent();
-        task = intent.getParcelableExtra("task");
     }
 
     @Override
@@ -35,7 +30,7 @@ public class DiaryTask extends FlipperActivityTask {
         EditText editText = (EditText) findViewById(R.id.diary_text);
         Data data = new Data();//Create new Data record
         data.setData(editText.getText().toString()); //Add text
-        data.setTaskId(task.getId());
+        data.setTaskId(getTask().getId());
         data.save();//Save
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
         //this.finish();//Close activity

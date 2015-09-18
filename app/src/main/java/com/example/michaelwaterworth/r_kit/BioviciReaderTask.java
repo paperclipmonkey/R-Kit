@@ -32,16 +32,16 @@ import java.util.UUID;
  */
 public class BioviciReaderTask extends FlipperActivityTask {
     private static final String TAG = "Biovici Reader";
+
     // Intent request codes
     private static final int REQUEST_ENABLE_BT = 3;
+
     // Well known SPP UUID
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private String deviceAddress;
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private InputStream inStream = null;
     private OutputStream outStream = null;
-    private Thread workerThread;
     private byte[] readBuffer;
     private int readBufferPosition;
     private volatile boolean stopWorker;
@@ -93,7 +93,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
-            deviceAddress = info.substring(info.length() - 17);
+            String deviceAddress = info.substring(info.length() - 17);
             if(connectToDevice(deviceAddress)) {
                 attemptConnectionTimeout = new CountDownTimer(5000, 5000) {
                     public void onTick(long millisUntilFinished) {}
@@ -200,7 +200,7 @@ public class BioviciReaderTask extends FlipperActivityTask {
         stopWorker = false;
         readBufferPosition = 0;
         readBuffer = new byte[1024];
-        workerThread = new Thread(new Runnable() {
+        Thread workerThread = new Thread(new Runnable() {
             public void run() {
                 while (!Thread.currentThread().isInterrupted() && !stopWorker) {
                     try {

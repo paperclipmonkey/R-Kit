@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
+ * Attaches Data objects to Lists.
+ * Adapter supplies stylised Data
  */
 class TaskAdapter extends BaseAdapter {
     private final List<Task> mTasks;
@@ -34,7 +35,6 @@ class TaskAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return i;
-        //return mTasks.get(i).getId();
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -45,23 +45,13 @@ class TaskAdapter extends BaseAdapter {
         }
 
         Task ti = mTasks.get(position);
-        //ImageView icon = (ImageView) view.findViewById(R.id.task_image);
         TextView title = (TextView) view.findViewById(R.id.task_title);
         TextView description = (TextView) view.findViewById(R.id.task_description);
         TextView dateView = (TextView) view.findViewById(R.id.task_date);
 
-//            if(ti.isSelected()) {
-//                icon.setImageResource(R.drawable.item_selected);
-//            }
-//            else {
-//                icon.setImageResource(R.drawable.item_unselected);
-//            }
-
-        //icon.setImageResource(R.drawable.rkit_launcher);
         title.setText(ti.getNotificationTitle());
         description.setText(ti.getNotifDesc());
 
-        //SimpleDateFormat format = new SimpleDateFormat("MMM dd,yyyy hh:mm a", Locale.UK);
         SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.UK);
         String date = format.format(ti.getDate().getTime());
         dateView.setText(date);

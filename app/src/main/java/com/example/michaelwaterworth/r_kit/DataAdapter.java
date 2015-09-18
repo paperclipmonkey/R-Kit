@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by michaelwaterworth on 16/08/15. Copyright Michael Waterworth
+ * Attaches Data objects to Lists.
+ * Adapter supplies stylised Data
  */
 class DataAdapter extends BaseAdapter {
     private final List<Data> mData;
@@ -45,23 +46,13 @@ class DataAdapter extends BaseAdapter {
         }
 
         Data ti = mData.get(position);
-        //ImageView icon = (ImageView) view.findViewById(R.id.task_image);
         TextView title = (TextView) view.findViewById(R.id.task_title);
         TextView description = (TextView) view.findViewById(R.id.task_description);
         TextView dateView = (TextView) view.findViewById(R.id.task_date);
 
-//            if(ti.isSelected()) {
-//                icon.setImageResource(R.drawable.item_selected);
-//            }
-//            else {
-//                icon.setImageResource(R.drawable.item_unselected);
-//            }
-
-        //icon.setImageResource(R.drawable.rkit_launcher);
         title.setText("" + ti.getDate());
         description.setText(ti.getData());
 
-        //SimpleDateFormat format = new SimpleDateFormat("MMM dd,yyyy hh:mm a", Locale.UK);
         SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.UK);
         String date = format.format(ti.getDate().getTime());
         dateView.setText(date);

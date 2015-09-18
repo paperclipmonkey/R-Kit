@@ -31,6 +31,11 @@ public class SchedulerService extends BroadcastReceiver {
     public SchedulerService() {
     }
 
+    /**
+     * Start the scheduler
+     * Set repeating alarm manager to check for new tasks every n seconds
+     * @param context
+     */
     public static void startScheduler(Context context) {
         startOnBoot(context);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -45,8 +50,11 @@ public class SchedulerService extends BroadcastReceiver {
                 1000 * 10, alarmIntent);
     }
 
+    /**
+     * Stop the scheduler by stopping and also stopping from starting again on boot
+     * @param context
+     */
     public static void stopScheduler(Context context) {
-        //TODO Fill in the rest - Stop pending schedules?
         killOnBoot(context);
     }
 
@@ -59,6 +67,10 @@ public class SchedulerService extends BroadcastReceiver {
                 PackageManager.DONT_KILL_APP);
     }
 
+    /**
+     * Stop the start on boot broadcast receiver
+     * @param context
+     */
     private static void killOnBoot(Context context) {
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
@@ -68,6 +80,11 @@ public class SchedulerService extends BroadcastReceiver {
                 PackageManager.DONT_KILL_APP);
     }
 
+    /**
+     * Called by the system when the SchedulerService is started up.
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         //Log.d(TAG, "Service");
@@ -106,7 +123,6 @@ public class SchedulerService extends BroadcastReceiver {
     }
 
     private void createService(Context context, Task task) {
-        //TODO Start service
         Intent resultIntent = new Intent();
         resultIntent.setClassName(context, context.getPackageName() + "." + task.getClassName());
         resultIntent.putExtra("task", task);

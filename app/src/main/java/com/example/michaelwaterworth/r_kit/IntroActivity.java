@@ -22,8 +22,6 @@ import java.util.Locale;
  */
 public class IntroActivity extends FlipperActivityTask {
     private final String TAG = "IntroActivity";
-    // When requested, this adapter returns a DemoObjectFragment,
-    // representing an object in the collection.
     private SignaturePad mSignaturePad;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,10 @@ public class IntroActivity extends FlipperActivityTask {
         });
     }
 
+    /**
+     * Done button has been pressed from UI
+     * @param v
+     */
     @Override
     public void buttonDone(View v) {
         if (mSignaturePad.isEmpty()) {
@@ -60,6 +62,9 @@ public class IntroActivity extends FlipperActivityTask {
         this.finish();
     }
 
+    /**
+     * Save to the DB
+     */
     private void saveData(){
         Data signature = new Data();
         signature.setData("User signed");
@@ -80,6 +85,10 @@ public class IntroActivity extends FlipperActivityTask {
         editor.apply();
     }
 
+    /**
+     * Save the signature as a file
+     * @param image
+     */
     private void storeImage(Bitmap image) {
         try {
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm", Locale.UK).format(new Date());

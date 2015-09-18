@@ -20,6 +20,10 @@ abstract class ActivityTask extends Activity{
         task = intent.getParcelableExtra("task");
     }
 
+    /**
+     * Hide the keyboard from the user
+     * Useful when transitioning between UI states.
+     */
     protected void hideKeyboard() {
         // Check if no view has focus:
         View view = this.getCurrentFocus();
@@ -29,10 +33,18 @@ abstract class ActivityTask extends Activity{
         }
     }
 
+    /**
+     * Get the task associated with this activity
+     * @return The task
+     */
     public Task getTask() {
         return task;
     }
 
+    /**
+     * Callable from UI XML. Finishes the Activity
+     * @param view Calling UI view object
+     */
     public void buttonDone(View view) {
         this.finish();
     }

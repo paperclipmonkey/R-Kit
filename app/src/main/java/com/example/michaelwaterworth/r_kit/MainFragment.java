@@ -77,10 +77,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // ListView Clicked item index
-
-                // ListView Clicked item value
                 Task task = (Task) listView.getItemAtPosition(i);
-//                String itemValue = task.getNotificationTitle();
+                //String itemValue = task.getNotificationTitle();
                 //check if within 5 minutes
                 Calendar futureDate = Calendar.getInstance();
                 futureDate.add(Calendar.MINUTE, 5);
@@ -91,10 +89,6 @@ public class MainFragment extends Fragment {
                     resultIntent.putExtra("task", task);
                     getActivity().startActivity(resultIntent);
                 }
-//                // Show Alert
-//                Toast.makeText(getActivity(),
-//                        "Position :" + i + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-//                        .show();
             }
         });
 

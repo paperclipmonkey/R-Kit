@@ -13,9 +13,9 @@ import java.util.List;
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
  */
 class Data extends SugarRecord {
-    private Long taskId;
-    private String data;
-    private Date date;
+    private Long taskId;//ID of Task
+    private String data;//Data to be stored
+    private Date date;//Timestamp of when the data was stored.
 
     public Data() {
         Calendar calendar = Calendar.getInstance();

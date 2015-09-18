@@ -139,7 +139,6 @@ public class BioviciReaderTask extends FlipperActivityTask {
                 pageNext();
             }
             return;
-            //TODO - Show image / display text in text view.
         }
         if (flipper.getCurrentView().getId() == R.id.pair_bluetooth) {
             bluetoothPair();

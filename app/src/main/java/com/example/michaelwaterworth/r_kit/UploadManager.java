@@ -97,8 +97,6 @@ public class UploadManager extends BroadcastReceiver {
             jsonArray.put(data.toJsonObject());
         }
         String jsonString = jsonArray.toString();
-        Log.d(TAG, "jsonString: " + jsonString);
-
         request.addParameter("data", jsonString);
     }
 

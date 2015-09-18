@@ -18,7 +18,9 @@ public abstract class FlipperActivityTask extends ActivityTask {
 
     protected void setTaskProgress(int percentage){
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.task_progressbar);
-        progressBar.setProgress(percentage);
+        if(progressBar != null) {
+            progressBar.setProgress(percentage);
+        }
     }
 
     public void buttonNext(View view) {
@@ -26,6 +28,8 @@ public abstract class FlipperActivityTask extends ActivityTask {
     }
 
     public void pageNext(){
-        flipper.showNext();  // Switches to the next view
+        if(flipper != null) {
+            flipper.showNext();  // Switches to the next view
+        }
     }
 }

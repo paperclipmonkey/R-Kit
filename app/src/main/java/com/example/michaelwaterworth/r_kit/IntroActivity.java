@@ -3,7 +3,6 @@ package com.example.michaelwaterworth.r_kit;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -21,11 +20,10 @@ import java.util.Locale;
 /**
  * Created by michaelwaterworth on 31/07/15. Copyright Michael Waterworth
  */
-public class IntroActivity extends FragmentActivity {
+public class IntroActivity extends FlipperActivityTask {
     private final String TAG = "IntroActivity";
     // When requested, this adapter returns a DemoObjectFragment,
     // representing an object in the collection.
-    private ViewFlipper flipper;
     private SignaturePad mSignaturePad;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +47,7 @@ public class IntroActivity extends FragmentActivity {
         });
     }
 
-    public void buttonNext(View view) {
-        flipper.showNext();  // Switches to the next view
-    }
-
+    @Override
     public void buttonDone(View v) {
         if (mSignaturePad.isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.task_empty_signature, Toast.LENGTH_SHORT).show();

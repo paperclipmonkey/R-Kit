@@ -17,10 +17,12 @@ import com.alexbbb.uploadservice.AllCertificatesAndHostsTruster;
 import com.alexbbb.uploadservice.UploadRequest;
 import com.alexbbb.uploadservice.UploadService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * Created by michaelwaterworth on 21/07/15. Copyright Michael Waterworth
@@ -71,19 +73,33 @@ public class UploadManager extends BroadcastReceiver {
         mNotificationManager.notify(0, mBuilder.build());
     }
 
-    public static void traverse(File dir, UploadRequest request) {
+    public static void addFiles(File dir, UploadRequest request) {
         if (dir.exists()) {
             File[] files = dir.listFiles();
             for (int i = 0; i < files.length; ++i) {
                 File file = files[i];
                 if (file.isDirectory()) {
-                    traverse(file, request);
+                    addFiles(file, request);
                 } else {
                     // do something here with the file
                     request.addFileToUpload(file.getPath(),"file" + i, file.getName(), "image/jpeg");
                 }
             }
         }
+    }
+
+    public static void addData(UploadRequest request){
+        JSONArray jsonArray = new JSONArray();
+        Iterator dataList = Data.findAll(Data.class);
+
+        while(dataList.hasNext()){
+            Data data = (Data) dataList.next();
+            jsonArray.put(data.toJsonObject());
+        }
+        String jsonString = jsonArray.toString();
+        Log.d(TAG, "jsonString: " + jsonString);
+
+        request.addParameter("data", jsonString);
     }
 
     static public void upload(Context context) {
@@ -109,11 +125,13 @@ public class UploadManager extends BroadcastReceiver {
 //            return;
 //        }
 
-        //Loop over the folder finding all files
-    /*
+        //Add all files for upload
         File filesDir = context.getFilesDir();
-        traverse(filesDir, request);
-    */
+        addFiles(filesDir, request);
+
+        //Add all data for upload
+        addData(request);
+
 //        request.addFileToUpload(rmvOverlayItem.getPhotoLocation(),
 //                "image",
 //                "uploaded.jpg",

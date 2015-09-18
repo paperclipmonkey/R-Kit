@@ -73,8 +73,9 @@ public class SchedulerService extends BroadcastReceiver {
         //Log.d(TAG, "Service");
         //Check in Db - see if there are any upcoming Task
         long numTasks = Task.count(Task.class, "hasnotified = 0", new String[0]);
+        long numData = Task.count(Data.class, "", new String[0]);
         Log.d(TAG, "Number of tasks: " + numTasks);
-        if(numTasks == 0 && !hasStartedUpload){
+        if(numTasks == 0 && numData > 0 && !hasStartedUpload){
             hasStartedUpload = true;
             Log.d(TAG, "starting Upload Task");
             Task uploadTask = new Task();

@@ -2,6 +2,9 @@ package com.example.michaelwaterworth.r_kit;
 
 import com.orm.SugarRecord;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -45,5 +48,17 @@ class Data extends SugarRecord {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public JSONObject toJsonObject(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("date", date);
+            jsonObject.put("taskId", taskId);
+            jsonObject.put("data", data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  jsonObject;
     }
 }

@@ -12,15 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.Calendar;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    private static final String ISFIRSTRUN = "IsFirstRun";
+    public static final String HASSIGNED = "hasSigned";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -42,11 +40,16 @@ public class MainActivity extends AppCompatActivity
     /**
      * Called when the user touches the button
      */
-    public void startIntro(View view) {
+    public void startIntro() {
         Intent intent = new Intent(this, IntroActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Check whether a service is running from within the current namespace
+     * @param serviceClass
+     * @return
+     */
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -57,7 +60,12 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
-
+    /**
+     * Add a schedule item to the database to be picked up by the notification service
+     * @param taskName Name of the task class to be run
+     * @param title Title to display in the notification
+     * @param description Description to displayed in the notification
+     */
     private void addSchedule(String taskName, String title, String description) {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, 1);
@@ -71,44 +79,31 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Check whether the user has signed the intro panel before
+     * @return Boolean whether they've signed
+     */
     private boolean hasSigned() {
         // Restore preferences
         SharedPreferences settings = getPreferences(0);
-        return settings.getBoolean(ISFIRSTRUN, false);
+        return settings.getBoolean(HASSIGNED, false);
     }
 
-    private void setSignedTrue() {
-        SharedPreferences settings = getPreferences(0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("silentMode", true);
 
-        // Commit the edit
-        editor.apply();
-    }
-
-    public List<Task> getUpcomingTasks() {
-        Calendar cal = Calendar.getInstance();
-        long sTime = cal.getTimeInMillis() / 1000;
-
-        return Task.find(Task.class, "datetime > ?", "" + sTime);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey("signed")) {
-            setSignedTrue();
-        }
-
         if (!hasSigned()) {
             //Show intro screens
-            //TODO
-            //startIntro();
+            startIntro();
         }
 
+        //Set the base view
         setContentView(R.layout.activity_main);
 
+        //Initialise the navigation drawer
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -118,11 +113,16 @@ public class MainActivity extends AppCompatActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        //If service isn't running start it
         if (!isMyServiceRunning(SchedulerService.class)) {
             startService();
         }
     }
 
+    /**
+     * Event handler for navigation drawer list item clicks
+     * @param position
+     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Log.d("Main", "Position: " + position);
@@ -142,15 +142,16 @@ public class MainActivity extends AppCompatActivity
         }
         if (position == 2) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, DataFragment.newInstance(position + 1))
+                    .replace(R.id.container, AboutFragment.newInstance(position + 1))
                     .commit();
             return;
         }
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-//                .commit();
     }
 
+    /**
+     * Retrieve the string name for items
+     * @param number int position of item
+     */
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -186,6 +187,11 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Click event handler for options menu (top right menu)
+     * @param item item clicked
+     * @return whether item should stay selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

@@ -21,17 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="57dp"
-            android:text="@string/task_spatial_title"
+            android:text="@string/task_intro_page1_title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/page1_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="57dp"
             android:gravity="center"
-            android:text="@string/task_spatial_page1_subtitle"
+            android:text="@string/task_intro_page1_subtitle"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
@@ -39,7 +38,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.63"
-            android:src="@drawable/memory_phone" />
+            android:src="@drawable/rkit_launcher" />
 
         <Button
             android:id="@+id/tapping_page1_next"
@@ -51,7 +50,7 @@
             android:text="@string/next_button" />
     </LinearLayout>
 
-    <!-- Page 2 -->
+     <!--Page 2 -->
     <LinearLayout
         android:id="@+id/page_2"
         android:layout_width="match_parent"
@@ -61,30 +60,23 @@
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/page2_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="57dp"
-            android:text="@string/task_spatial_title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
             android:id="@+id/page2_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="57dp"
             android:gravity="center"
-            android:text="@string/task_spatial_page2_subtitle"
+            android:text="@string/task_intro_page2_subtitle"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <ImageView
-            android:layout_width="427dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.63"
-            android:src="@drawable/memory_phone" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="248dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/task_intro_t_c"
+                />
+        </ScrollView>
 
         <Button
             android:id="@+id/tapping_page3_next"
@@ -93,22 +85,42 @@
             android:layout_gravity="bottom|end"
             android:longClickable="true"
             android:onClick="buttonNext"
-            android:text="@string/get_started_button" />
+            android:text="@string/task_intro_page2_button" />
     </LinearLayout>
 
 
-    <!-- Game page -->
+    <!-- Signature page -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_intro_page3_subtitle"
+            android:layout_margin="10dp"
+            android:id="@+id/textView7" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_empty_signature"
+            android:layout_below="@+id/textView7"
+            android:layout_alignLeft="@+id/textView7"
+            android:layout_alignStart="@+id/textView7"
+            android:id="@+id/textView8" />
 
         <com.github.gcacace.signaturepad.views.SignaturePad xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/signature_pad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:penColor="@android:color/black" />
+            app:penColor="@android:color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView8"
+            android:layout_above="@+id/button3" />
 
         <Button
             android:id="@+id/button3"
@@ -118,6 +130,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="buttonDone"
-            android:text="@string/done_button" />
+            android:text="@string/task_intro_page2_button" />
     </RelativeLayout>
 </ViewFlipper>

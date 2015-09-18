@@ -28,15 +28,15 @@
 
 
     <!-- Intro task -->
-    <string name="intro_page1_title">Welcome to R-Kit</string>
-    <string name="intro_page1_subtitle">R-Kit description</string>
-    <string name="intro_page2_title">Terms &amp; Conditions</string>
-    <string name="intro_page2_subtitle">Please agree to the terms and conditions</string>
-    <string name="intro_page2_button">I Agree</string>
-    <string name="intro_page3_title">Signature</string>
-    <string name="intro_page3_subtitle">I consent to the agree by the R-Kit terms and conditions</string>
-    <string name="empty_signature">Please sign</string>
-    <string name="intro_t_c">Lorem Ipsum Dolar sit amut</string>
+    <string name="task_intro_page1_title">Welcome to R-Kit</string>
+    <string name="task_intro_page1_subtitle">R-Kit is an innovative new research tool for Android. It\'s adaptable to fit your needs. Check it out on GitHub now or explore this app to see some example features.</string>
+    <string name="task_intro_page2_title">Terms &amp; Conditions</string>
+    <string name="task_intro_page2_subtitle">Please agree to the terms and conditions</string>
+    <string name="task_intro_page2_button">I Agree</string>
+    <string name="task_intro_page3_title">Signature</string>
+    <string name="task_intro_page3_subtitle">I consent to the agree by the R-Kit terms and conditions</string>
+    <string name="task_empty_signature">Please sign</string>
+    <string name="task_intro_t_c">Lorem Ipsum Dolar sit amut</string>
 
 
     <!-- Task default text -->

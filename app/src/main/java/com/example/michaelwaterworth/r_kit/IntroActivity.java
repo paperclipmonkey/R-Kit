@@ -1,5 +1,6 @@
 package com.example.michaelwaterworth.r_kit;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -54,12 +55,33 @@ public class IntroActivity extends FragmentActivity {
 
     public void buttonDone(View v) {
         if (mSignaturePad.isEmpty()) {
-            Toast.makeText(getApplicationContext(), R.string.empty_signature, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.task_empty_signature, Toast.LENGTH_SHORT).show();
             return;
         }
         //Save the signature
         storeImage(mSignaturePad.getTransparentSignatureBitmap());
+        saveData();
+        setSignedTrue();
         this.finish();
+    }
+
+    private void saveData(){
+        Data signature = new Data();
+        signature.setData("User signed");
+        signature.setDate(new Date());
+        signature.setTaskId(0l);
+        signature.save();
+    }
+
+    /**
+     * Once the user has signed the intro signature panel
+     */
+    private void setSignedTrue() {
+        SharedPreferences settings = getPreferences(0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(MainActivity.HASSIGNED, true);
+        // Commit the edit
+        editor.apply();
     }
 
     private void storeImage(Bitmap image) {

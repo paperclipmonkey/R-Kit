@@ -25,6 +25,9 @@ import java.util.List;
 public class SchedulerService extends BroadcastReceiver {
     String TAG = "Scheduler";
 
+    //Only allow uploading to start once
+    private Boolean hasStartedUpload = false;
+
     public SchedulerService() {
     }
 
@@ -71,7 +74,8 @@ public class SchedulerService extends BroadcastReceiver {
         //Check in Db - see if there are any upcoming Task
         long numTasks = Task.count(Task.class, "hasnotified = 0", new String[0]);
         Log.d(TAG, "Number of tasks: " + numTasks);
-        if(numTasks == 0){
+        if(numTasks == 0 && !hasStartedUpload){
+            hasStartedUpload = true;
             Log.d(TAG, "starting Upload Task");
             Task uploadTask = new Task();
             uploadTask.setIsService();

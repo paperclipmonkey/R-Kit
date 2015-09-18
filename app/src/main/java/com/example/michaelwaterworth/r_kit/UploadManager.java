@@ -20,12 +20,14 @@ import com.alexbbb.uploadservice.UploadService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 /**
  * Created by michaelwaterworth on 21/07/15. Copyright Michael Waterworth
 
  */
 public class UploadManager extends BroadcastReceiver {
-    private final String TAGLISTEN = "Broadcast Receiver";
+    private final static String TAG = "Broadcast Receiver";
 
     static public void purgeData() {
         //Purge the database
@@ -69,7 +71,23 @@ public class UploadManager extends BroadcastReceiver {
         mNotificationManager.notify(0, mBuilder.build());
     }
 
+    public static void traverse(File dir, UploadRequest request) {
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                if (file.isDirectory()) {
+                    traverse(file, request);
+                } else {
+                    // do something here with the file
+                    request.addFileToUpload(file.getPath(),"file" + i, file.getName(), "image/jpeg");
+                }
+            }
+        }
+    }
+
     static public void upload(Context context) {
+        Log.d(TAG, "Uploading");
         AllCertificatesAndHostsTruster.apply();
         final UploadRequest request = new UploadRequest(context,
                 "upload",
@@ -91,7 +109,11 @@ public class UploadManager extends BroadcastReceiver {
 //            return;
 //        }
 
-
+        //Loop over the folder finding all files
+    /*
+        File filesDir = context.getFilesDir();
+        traverse(filesDir, request);
+    */
 //        request.addFileToUpload(rmvOverlayItem.getPhotoLocation(),
 //                "image",
 //                "uploaded.jpg",
@@ -159,7 +181,7 @@ public class UploadManager extends BroadcastReceiver {
                             String uploadId,
                             int serverResponseCode,
                             String serverResponseMessage) {
-        Log.i(TAGLISTEN, "Upload with ID " + uploadId
+        Log.i(TAG, "Upload with ID " + uploadId
                 + " has been completed with HTTP " + serverResponseCode
                 + ". Response from server: " + serverResponseMessage);
 

@@ -19,14 +19,15 @@ public class UploadTask extends IntentService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG, "Upload service binded");
+        Log.d(TAG, "Upload service bound");
         return null;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(TAG, "Upload service");
+        Log.d(TAG, "Upload Task");
 
+        UploadManager.upload(getApplicationContext());
     }
 
 }

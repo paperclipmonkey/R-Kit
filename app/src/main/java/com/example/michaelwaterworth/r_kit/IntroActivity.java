@@ -77,7 +77,8 @@ public class IntroActivity extends FragmentActivity {
      * Once the user has signed the intro signature panel
      */
     private void setSignedTrue() {
-        SharedPreferences settings = getPreferences(0);
+        Log.d(TAG, "Setting user has signed");
+        SharedPreferences settings = getSharedPreferences(BaseApplication.SHAREDPREFERENCES, 1);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(MainActivity.HASSIGNED, true);
         // Commit the edit

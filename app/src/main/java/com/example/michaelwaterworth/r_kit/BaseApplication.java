@@ -7,6 +7,7 @@ import com.alexbbb.uploadservice.UploadService;
  */
 
 public class BaseApplication extends com.orm.SugarApp {
+    public static final String SHAREDPREFERENCES = "rkit";
 
     @Override
     public void onCreate() {

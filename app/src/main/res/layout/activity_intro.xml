@@ -70,7 +70,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="248dp">
+            android:layout_height="248dp"
+            android:fillViewport="true">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

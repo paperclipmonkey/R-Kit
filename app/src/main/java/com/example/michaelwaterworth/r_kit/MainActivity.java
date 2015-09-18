@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity
      */
     private boolean hasSigned() {
         // Restore preferences
-        SharedPreferences settings = getPreferences(0);
+        SharedPreferences settings = getSharedPreferences(BaseApplication.SHAREDPREFERENCES, 1);
         return settings.getBoolean(HASSIGNED, false);
     }
 

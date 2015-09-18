@@ -23,6 +23,7 @@ import java.util.List;
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
  */
 public class SchedulerService extends BroadcastReceiver {
+    String TAG = "Scheduler";
 
     public SchedulerService() {
     }
@@ -68,6 +69,20 @@ public class SchedulerService extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //Log.d(TAG, "Service");
         //Check in Db - see if there are any upcoming Task
+        long numTasks = Task.count(Task.class, "hasnotified = 0", new String[0]);
+        Log.d(TAG, "Number of tasks: " + numTasks);
+        if(numTasks == 0){
+            Log.d(TAG, "starting Upload Task");
+            Task uploadTask = new Task();
+            uploadTask.setIsService();
+            uploadTask.setClassName("UploadTask");
+            uploadTask.setDate(Calendar.getInstance());
+            uploadTask.setNotifDesc("");
+            uploadTask.setNotificationTitle("");
+            createService(context, uploadTask);
+            return;
+        }
+
         Calendar cal = Calendar.getInstance();
 
         long sTime = cal.getTimeInMillis() / 1000;
@@ -75,7 +90,6 @@ public class SchedulerService extends BroadcastReceiver {
         cal.add(Calendar.MINUTE, 5);
         long eTime = cal.getTimeInMillis() / 1000;
         List<Task> tasks = Task.find(Task.class, "date > ? and date < ? and hasnotified = 0", "" + sTime, "" + eTime);
-        String TAG = "Scheduler";
         Log.d(TAG, tasks.toString());
         for (Task task : tasks) {
             if (task.getIsService()) {
@@ -89,7 +103,7 @@ public class SchedulerService extends BroadcastReceiver {
     private void createService(Context context, Task task) {
         //TODO Start service
         Intent resultIntent = new Intent();
-        resultIntent.setClassName(context, task.getClassName());
+        resultIntent.setClassName(context, context.getPackageName() + "." + task.getClassName());
         resultIntent.putExtra("task", task);
         context.startService(resultIntent);
     }

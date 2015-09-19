@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
+ * Schedules starting Tasks at the right time
+ * Runs as a persistent background service
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
  */
 public class SchedulerService extends BroadcastReceiver {

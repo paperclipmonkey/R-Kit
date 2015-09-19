@@ -15,7 +15,10 @@ import android.view.MenuItem;
 
 import java.util.Calendar;
 
-
+/**
+ * Base activity for the App
+ * Coordinator for moving fragments in and out of view
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String HASSIGNED = "hasSigned";

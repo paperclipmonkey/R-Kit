@@ -6,6 +6,9 @@ import android.widget.ProgressBar;
 import android.widget.ViewFlipper;
 
 /**
+ * Abstract class that Tasks that use multiple pages can inherit from
+ * Uses a View Flipper to switch between views inside the Activity.
+ * Additionally a progress bar is used to show progress through the task.
  * Created by michaelwaterworth on 03/09/15. Copyright Michael Waterworth
  */
 public abstract class FlipperActivityTask extends ActivityTask {

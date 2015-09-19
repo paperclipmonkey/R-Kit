@@ -28,6 +28,9 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
+ * The Biovici reader task
+ * Read from the Biovici reader over Bluetooth (Requires device)
+ * Save reading to Data table
  * Created by michaelwaterworth on 25/08/15. Copyright Michael Waterworth
  */
 public class BioviciReaderTask extends FlipperActivityTask {

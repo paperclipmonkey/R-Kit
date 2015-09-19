@@ -25,8 +25,10 @@ import java.io.File;
 import java.util.Iterator;
 
 /**
+ * Manage uploads from the device
+ * When uploading add all images and data in
+ * then purge the device
  * Created by michaelwaterworth on 21/07/15. Copyright Michael Waterworth
-
  */
 public class UploadManager extends BroadcastReceiver {
     private final static String TAG = "Broadcast Receiver";

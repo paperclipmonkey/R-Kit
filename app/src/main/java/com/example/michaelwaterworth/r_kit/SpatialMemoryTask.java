@@ -12,6 +12,9 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 
 /**
+ * Spatial Memory Task
+ * Check a participants Spatial Memory by showing them increasingly long tests
+ * Record their results in to Data table
  * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
  */
 public class SpatialMemoryTask extends FlipperActivityTask {

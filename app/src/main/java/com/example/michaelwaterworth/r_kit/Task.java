@@ -8,6 +8,8 @@ import com.orm.SugarRecord;
 import java.util.Calendar;
 
 /**
+ * Base class for a task object in the database
+ * Relies on SugarRecord from SugarORM
  * Created by michaelwaterworth on 30/07/15. Copyright Michael Waterworth
  */
 public class Task extends SugarRecord implements Parcelable {
@@ -22,13 +24,13 @@ public class Task extends SugarRecord implements Parcelable {
             return new Task[size];
         }
     };
-    private Long date;
-    private String className;
-    private String notificationTitle;
-    private String notifDesc;
-    private String extras;
-    private Boolean isService;
-    private Boolean hasnotified;
+    private Long date;//Date & Time to be completed
+    private String className;//Name of class to be run
+    private String notificationTitle;//Title to be used in notification
+    private String notifDesc;//Description to be used in notification
+    private String extras;//Any extras to be sent to the Task class
+    private Boolean isService;//Bool is this a serivce. Services started directly without notification
+    private Boolean hasnotified;//Bool has this Task already been used as a notification
 
     public Task() {
         hasnotified = false;

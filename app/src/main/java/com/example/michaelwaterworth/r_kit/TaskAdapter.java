@@ -37,6 +37,13 @@ class TaskAdapter extends BaseAdapter {
         return i;
     }
 
+    /**
+     * Render a view of the object for the list
+     * @param position Location in list
+     * @param view Base view
+     * @param parent Parent view
+     * @return Assembled view object
+     */
     public View getView(int position, View view, ViewGroup parent) {
 
         if (view == null) {

@@ -7,6 +7,8 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 /**
+ * Diary task allows users to add a new diary entry as a task
+ * Saves text to the Data table
  * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
  */
 public class DiaryTask extends FlipperActivityTask {

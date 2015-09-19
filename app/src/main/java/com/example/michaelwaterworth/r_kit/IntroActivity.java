@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
+ * First task when the user opens the app.
+ * Asks the user to agree to the T&C and sign
  * Created by michaelwaterworth on 31/07/15. Copyright Michael Waterworth
  */
 public class IntroActivity extends FlipperActivityTask {

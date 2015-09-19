@@ -33,10 +33,12 @@ import java.util.Iterator;
 public class UploadManager extends BroadcastReceiver {
     private final static String TAG = "Broadcast Receiver";
 
-    static public void purgeData() {
+    static public void purgeData(Context context) {
         //Purge the database
         Data.deleteAll(Data.class);
-        //TODO - Remove all saved files
+        //Delete all files
+        File filesDir = context.getFilesDir();
+        deleteFiles(filesDir);
     }
 
     static public void buildSuccessNotification(Context context, JSONObject jsonObject) {
@@ -69,10 +71,29 @@ public class UploadManager extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        //TODO - Fix issue of replacing previous notification
 
         // mId allows you to update the notification later on.
         mNotificationManager.notify(0, mBuilder.build());
+    }
+
+
+    /**
+     * Add all of the files in the private folder to the upload
+     * @param dir directory to loop over deleting from recursively
+     */
+    public static void deleteFiles(File dir) {
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                if (file.isDirectory()) {
+                    deleteFiles(file);
+                } else {
+                    // do something here with the file
+                    file.delete();
+                }
+            }
+        }
     }
 
     /**
@@ -211,7 +232,7 @@ public class UploadManager extends BroadcastReceiver {
 
                 buildSuccessNotification(context, jsonObject);
 
-                purgeData();
+                purgeData(context);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -73,6 +73,11 @@ public class UploadManager extends BroadcastReceiver {
         mNotificationManager.notify(0, mBuilder.build());
     }
 
+    /**
+     * Add all of the files in the private folder to the upload
+     * @param dir
+     * @param request
+     */
     public static void addFiles(File dir, UploadRequest request) {
         if (dir.exists()) {
             File[] files = dir.listFiles();
@@ -88,6 +93,10 @@ public class UploadManager extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Add Data from the SQLite db to the upload
+     * @param request
+     */
     public static void addData(UploadRequest request){
         JSONArray jsonArray = new JSONArray();
         Iterator dataList = Data.findAll(Data.class);
@@ -100,6 +109,10 @@ public class UploadManager extends BroadcastReceiver {
         request.addParameter("data", jsonString);
     }
 
+    /**
+     * Start a new upload
+     * @param context
+     */
     static public void upload(Context context) {
         Log.d(TAG, "Uploading");
         AllCertificatesAndHostsTruster.apply();
@@ -116,13 +129,6 @@ public class UploadManager extends BroadcastReceiver {
      * E.g. value of $_FILES["uploaded_file"]["name"] of the test PHP script
      */
 
-//        File file = new File(rmvOverlayItem.getPhotoLocation());
-//        if(!file.exists()){
-//            Toast.makeText(context, "Photo has been removed. Deleting upload...", Toast.LENGTH_LONG).show();
-//            deleteUpload(rmvOverlayItem.getId());
-//            return;
-//        }
-
         //Add all files for upload
         File filesDir = context.getFilesDir();
         addFiles(filesDir, request);
@@ -130,23 +136,7 @@ public class UploadManager extends BroadcastReceiver {
         //Add all data for upload
         addData(request);
 
-//        request.addFileToUpload(rmvOverlayItem.getPhotoLocation(),
-//                "image",
-//                "uploaded.jpg",
-//                "image/jpeg");
-//
-//        //and parameters
-//        request.addParameter("comments", rmvOverlayItem.getComments());
-//        request.addArrayParameter("words", rmvOverlayItem.getWordsArray());
-//        request.addParameter("age", rmvOverlayItem.getAge());
-//        request.addParameter("know", rmvOverlayItem.getKnow());
-//        request.addParameter("rating", "" + rmvOverlayItem.getRating());
-//        request.addParameter("heading", "" + rmvOverlayItem.getHeading());
-//
-//        //Location
-//        request.addParameter("lat", "" + rmvOverlayItem.getLat());
-//        request.addParameter("lng", "" + rmvOverlayItem.getLng());
-//
+
 //        //configure the notification
 //        request.setNotificationConfig(R.drawable.app_icon_silhouette,
 //                context.getString(R.string.app_name),
@@ -168,9 +158,14 @@ public class UploadManager extends BroadcastReceiver {
             //You will end up here only if you pass an incomplete UploadRequest
             Log.e("AndroidUploadService", exc.getLocalizedMessage(), exc);
         }
-        // Toast.makeText(context.getApplicationContext(), context.getString(R.string.uploading_toast), Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Receiving status notifcations from the system.
+     * If complete call onCompleted
+     * @param context
+     * @param intent
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -193,6 +188,13 @@ public class UploadManager extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Once the upload has completed check the response
+     * @param context
+     * @param uploadId
+     * @param serverResponseCode
+     * @param serverResponseMessage
+     */
     public void onCompleted(Context context,
                             String uploadId,
                             int serverResponseCode,

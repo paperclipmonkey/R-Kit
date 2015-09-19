@@ -12,7 +12,9 @@ import android.os.Build;
 import android.util.Log;
 
 /**
- * Created by michaelwaterworth on 15/08/15. Copyright Michael Waterworth
+ * A background service that logs the number of steps taken on the device.
+ * The API only provides the number of steps since started.
+ * By checking periodically it's possible to have more and more fine-grained detail on no. of steps
  */
 public class StepCounterTask extends IntentService {
     private final String TAG = "StepCounterTask";
@@ -29,6 +31,11 @@ public class StepCounterTask extends IntentService {
         initialise(context);
     }
 
+    /**
+     * Initialise the Task and register an event listener
+     * This Task only works on Android KitKat or higher
+     * @param context
+     */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void initialise(Context context) {
         //hasSystemFeature()

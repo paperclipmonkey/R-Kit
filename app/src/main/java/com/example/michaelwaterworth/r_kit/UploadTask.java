@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**
- * Created by michaelwaterworth on 18/09/15. Copyright Michael Waterworth
+ * Called from the Scheduler Service when there are no more scheduled tasks left
+ * and data to upload. Kicks off the static upload task
  */
 public class UploadTask extends IntentService {
     String TAG = "UploadService";
+
 
     public UploadTask() {
         super("UploadTask");

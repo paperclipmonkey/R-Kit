@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by michaelwaterworth on 18/08/15. Copyright Michael Waterworth
+ * Insprired by Research Kit
+ * Tap two buttons repeatedly, measuring time between button presses and which button was pressed.
+ * By analysing the candence it's possible to measure motor control.
  */
 public class TappingTask extends FlipperActivityTask {
     private final List<TappingTaskTap> taps = new ArrayList<>();
@@ -69,13 +71,8 @@ public class TappingTask extends FlipperActivityTask {
             public void onFinish() {
                 isRunning = false;
                 isFinished = true;
-                //mTextView.setText("Finished!");
                 Log.d("Tapping,", taps.toString());
                 save();
-                flipper.showNext();
-                //    Button button = (Button) findViewById(R.id.tapping_start_stop);
-                //    button.setVisibility(View.VISIBLE);
-                //    button.setText("Save");
             }
         }.start();
     }

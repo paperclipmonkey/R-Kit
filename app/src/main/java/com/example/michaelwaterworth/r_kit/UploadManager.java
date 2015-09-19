@@ -46,7 +46,7 @@ public class UploadManager extends BroadcastReceiver {
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.rkit_launcher)
                         .setContentTitle("Upload Successful")
-                        .setContentText("Click to see uploaded view");
+                        .setContentText("Thanks for participating in an R-Kit study");
 
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, MainActivity.class);

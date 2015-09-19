@@ -58,8 +58,9 @@ public class IntroActivity extends FlipperActivityTask {
             return;
         }
         //Save the signature
-        storeImage(mSignaturePad.getTransparentSignatureBitmap());
-        saveData();
+        String fileName = new SimpleDateFormat("ddMMyyyy_HHmm", Locale.UK).format(new Date()) + "\".png\"";
+        storeImage(mSignaturePad.getTransparentSignatureBitmap(), fileName);
+        saveData(fileName);
         setSignedTrue();
         this.finish();
     }
@@ -67,9 +68,9 @@ public class IntroActivity extends FlipperActivityTask {
     /**
      * Save to the DB
      */
-    private void saveData(){
+    private void saveData(String fileName){
         Data signature = new Data();
-        signature.setData("User signed");
+        signature.setData("User signature saved with filename: " + fileName);
         signature.setDate(new Date());
         signature.setTaskId(0l);
         signature.save();
@@ -91,11 +92,9 @@ public class IntroActivity extends FlipperActivityTask {
      * Save the signature as a file
      * @param image
      */
-    private void storeImage(Bitmap image) {
+    private void storeImage(Bitmap image, String fileName) {
         try {
-            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm", Locale.UK).format(new Date());
-
-            FileOutputStream fos = openFileOutput(timeStamp + ".png", MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, MODE_PRIVATE);
 
             image.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.close();

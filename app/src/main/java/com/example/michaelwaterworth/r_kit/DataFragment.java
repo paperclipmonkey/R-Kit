@@ -1,7 +1,6 @@
 package com.example.michaelwaterworth.r_kit;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -71,28 +69,6 @@ public class DataFragment extends Fragment {
         Log.d("Home", "data: " + adapter.getCount());
         // Assign adapter to ListView
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // ListView Clicked item index
-
-                // ListView Clicked item value
-                Task task = (Task) listView.getItemAtPosition(i);
-
-                //check if within 5 minutes
-                Calendar futureDate = Calendar.getInstance();
-                futureDate.add(Calendar.MINUTE, 5);
-                if (task.getDate().compareTo(futureDate) < 0) {
-                    //Allow clicking and initiate activity
-                    Intent resultIntent = new Intent();
-                    resultIntent.setClassName(getActivity(), getActivity().getPackageName() + "." + task.getClassName());
-                    resultIntent.putExtra("task", task);
-                    getActivity().startActivity(resultIntent);
-                }
-            }
-        });
 
         return base;
     }

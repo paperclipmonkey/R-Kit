@@ -59,7 +59,7 @@ class TaskAdapter extends BaseAdapter {
         title.setText(ti.getNotificationTitle());
         description.setText(ti.getNotifDesc());
 
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.UK);
+        SimpleDateFormat format = new SimpleDateFormat("d/M hh:mm a", Locale.UK);
         String date = format.format(ti.getDate().getTime());
         dateView.setText(date);
         return view;

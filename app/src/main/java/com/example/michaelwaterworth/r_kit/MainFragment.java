@@ -67,7 +67,8 @@ public class MainFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
 
         long sTime = cal.getTimeInMillis() / 1000;
-        TaskAdapter adapter = new TaskAdapter(Task.find(Task.class, "date > ?", "" + sTime));
+        String[] whereArgs = {"" + sTime};
+        TaskAdapter adapter = new TaskAdapter(Task.find(Task.class, "date > ?", whereArgs, null, "date", null));
         Log.d("Home", "Upcoming tasks: " + adapter.getCount());
         // Assign adapter to ListView
         listView.setAdapter(adapter);

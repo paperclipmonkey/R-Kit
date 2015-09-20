@@ -62,6 +62,7 @@ public class IntroActivity extends FlipperActivityTask {
         storeImage(mSignaturePad.getTransparentSignatureBitmap(), fileName);
         saveData(fileName);
         setSignedTrue();
+        SchedulerService.generateSchedule(getApplicationContext());
         this.finish();
     }
 

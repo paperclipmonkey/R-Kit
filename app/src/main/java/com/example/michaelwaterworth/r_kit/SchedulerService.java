@@ -189,4 +189,61 @@ public class SchedulerService extends BroadcastReceiver {
         task.setHasnotified(true);
         task.save();
     }
+
+    /**
+     * Called when the user finishes the intro activity. This should be overridden to provide your own schedule.
+     */
+    public static void generateSchedule(Context context){
+        //Add Biovici tasks
+        int i = 1;//Days from now
+        int x = 9;//Time
+        while(i <= 14){//30 days
+            while(x <= 21){//9PM
+                //Create a new task record.
+                Calendar cal = Calendar.getInstance();
+                //Initialise Calendar to on the hour
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+
+                //Set Hour
+                cal.set(Calendar.HOUR_OF_DAY, x);
+                //Set Day
+                cal.add(Calendar.DAY_OF_YEAR, i);
+
+                //Create new task
+                Task task = new Task();
+                task.setDate(cal);
+                task.setNotificationTitle(context.getString(R.string.notification_cortisol_title));
+                task.setNotifDesc(context.getString(R.string.notification_cortisol_description));
+                task.setClassName("BioviciReaderTask");
+                task.save();
+
+                x = x + 3;
+            }
+            x = 9;
+            i++;
+        }
+
+        i = 1;//Days from now
+        while(i <= 14){//30 days
+                //Create a new task record.
+                Calendar cal = Calendar.getInstance();
+                //Initialise Calendar to midnight
+                cal.set(Calendar.HOUR, 21);
+                cal.set(Calendar.MINUTE, 30);
+                cal.set(Calendar.MILLISECOND, 0);
+
+                //Set Day
+                cal.add(Calendar.DAY_OF_YEAR, i);
+
+                //Create new task
+                Task task = new Task();
+                task.setDate(cal);
+                task.setNotificationTitle(context.getString(R.string.notification_diary_title));
+                task.setNotifDesc(context.getString(R.string.notification_diary_description));
+                task.setClassName("DiaryTask");
+                task.save();
+            i++;
+        }
+    }
 }

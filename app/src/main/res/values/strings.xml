@@ -121,4 +121,10 @@
     <string name="task_diary_subtitle">Please add a new diary entry</string>
 
 
+    <string name="notification_cortisol_title">Cortisol Study</string>
+    <string name="notification_cortisol_description">Time to complete a Cortisol study</string>
+
+    <string name="notification_diary_title">Cortisol Study</string>
+    <string name="notification_diary_description">Time to add a diary entry</string>
+
 </resources>
